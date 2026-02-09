@@ -29,6 +29,8 @@ GATE_CREATOR(NotGate);
 
 class ComponentFactory {
 public:
+
+private:
     const std::map<std::string, std::function<std::unique_ptr<IComponent()>>> Factory = {{"and", createAndGate()},
         {"nand", createNandGate()},
         {"or", createOrGate()},
@@ -37,8 +39,6 @@ public:
         {"not", createNotGate()},
         {"and", createAndGate()},
     };
-private:
-    
 };
 }
 
