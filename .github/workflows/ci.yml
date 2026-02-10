@@ -9,6 +9,20 @@ on:
       - 'ga-ignore-*'
 
 jobs:
+  check_program_compilation:
+    name: Check Compilation
+    runs-on: ubuntu-latest
+    container:  epitechcontent/epitest-docker
+    timeout-minutes: 2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@main
+      - name: Build binary
+        run: make
+      - run: make clean
+      - name: Check Binary
+        run: for binary in "${{ vars.EXECUTABLES }}"; do if [ ! -x $binary ]; then exit 1; fi; done
+
   check_memory_leak:
     name: Check Memory Leak
     runs-on: ubuntu-latest
