@@ -53,6 +53,17 @@ Checks:
 # K6 - Type aliases
   - modernize-use-using
 
+  - bugprone-branch-clone
+
+  - bugprone-branch-clone
+  - bugprone-*,
+  - performance-*,
+  - readability-*,
+  - modernize-*,
+  - -modernize-use-trailing-return-type,
+  - -readability-magic-numbers
+  - -readability-named-parameter
+
 WarningsAsErrors: >
   cppcoreguidelines-non-private-member-variables-in-classes,
   cppcoreguidelines-virtual-class-destructor,
@@ -68,7 +79,7 @@ WarningsAsErrors: >
   modernize-use-nullptr,
   google-readability-casting,
   google-build-using-namespace,
-  cppcoreguidelines-prefer-member-initializer
+  cppcoreguidelines-prefer-member-initializer,
 
 CheckOptions:
 # N3 - Functions (and methods)
