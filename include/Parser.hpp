@@ -21,13 +21,11 @@
 
 namespace nts {
 
-extern const nts::token Keywords[]; 
 
 using chipsetName = std::string;
 using chipsetType = std::string;
 using pin = std::size_t;
 using token = std::string;
-
 
 class Circuit;
 
@@ -46,15 +44,17 @@ public:
 
     ~Parser() noexcept;
 
-    std::vector<std::pair<IComponent&, chipsetName>> getChipsets() const noexcept;
+    std::vector<std::pair<void *, chipsetName>> getChipsets() const noexcept;
+
     std::vector<Link> getLinks() const noexcept;
     void setCircuit(std::shared_ptr<Circuit> ptr) {this->_circuit = ptr;}
     std::shared_ptr<Circuit> getCircuit() {return this->_circuit;}
     
     void start();
-    std::string sanitize(const char *line) const;
-    std::vector<std::string> splitStr(std::string str) const;
-    void verifySyntax(std::vector<std::string> vec) const;
+    void sanitize(std::string &str) const;
+    std::vector<std::string> splitStr(std::string &str, char delimiter) const;
+
+    void verifySyntax(std::vector<std::string> vec);
     void addToCircuit(std::vector<std::string> tokens);
 
     class ParserFileException : public std::exception {
@@ -81,10 +81,12 @@ public:
     };
 
 private:
-    std::vector<std::pair<IComponent, chipsetName>> _chipsets;
+    std::vector<std::pair<void *, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
     std::shared_ptr<Circuit> _circuit;
+    bool has_components_section = false;
+    bool has_links_section = false;
 };
 
 }

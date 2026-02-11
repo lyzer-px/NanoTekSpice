@@ -5,8 +5,12 @@
 ** 
 */
 
+#include <algorithm>
 #include <fstream>
+#include <iostream>
+#include <regex>
 #include <sstream>
+#include <string>
 #include <vector>
 #include "Circuit.hpp"
 #include "Parser.hpp"
@@ -73,51 +77,61 @@ nts::Parser::~Parser() noexcept
 
 void nts::Parser::start()
 {
-    char line[MAX_INPUT];
-    bool has_components_section = false;
-    bool has_links_section = false;
+    std::string line;
 
-    while (this->_stream.getline(line, MAX_INPUT)) {
+    while (std::getline(this->_stream, line)) {
         if (line[0] == '#')
             continue;
-        std::string sanitized = this->sanitize(line);
-        std::vector<std::string> tokens = this->splitStr(sanitized);
-        if (! has_components_section && tokens.at(0) == Keywords[1])
-            has_components_section = true;
-        if (! has_links_section && tokens.at(0) == Keywords[1])
-            has_links_section = true;
+        this->sanitize(line);
+        std::vector<std::string> tokens = this->splitStr(line, ' ');
+        #ifdef DEBUG
+            std::cout << "line: \""<< line << "\"" << std::endl;  
+        #endif
+        this->verifySyntax(tokens);
         this->addToCircuit(tokens);
     }
-    if (has_components_section == false || has_links_section == false)
+    if (this->has_components_section == false || this->has_links_section == false)
         throw ParserFileException("Invalid file format");
 }
 
-std::string nts::Parser::sanitize(const char *line) const
+void nts::Parser::addToCircuit(std::vector<std::string>)
 {
-    std::string sanitized = line;
-
-    sanitized.replace(sanitized.begin(), sanitized.end(), '\t', ' ');
-    return sanitized;
+    return;
 }
 
-std::vector<std::string> nts::Parser::splitStr(std::string str) const
+void nts::Parser::sanitize(std::string &str) const
 {
-    std::vector<std::string> vec;
-    std::size_t len = str.length();
-    std::size_t pos = 0;  
-
-    do {
-        std::size_t delim_index = str.find(" ");
-        vec.push_back(str.substr(pos, delim_index));
-        pos += delim_index;
-    } while (pos != len);
-    return vec;
+    std::regex whitespaces("[\\s]+");
+    str = std::regex_replace(str, whitespaces, " ");
 }
 
-void nts::Parser::verifySyntax(std::vector<std::string> vec) const
+std::vector<std::string> nts::Parser::splitStr(std::string &str, char delimiter) const
 {
-    for (auto token : vec) {
-        if (! Keywords->find(token) && token[0] != 'i')
-            throw ParserSyntaxException("Parser : invalid token");
+    std::vector<std::string> tokens;
+    std::stringstream stream(str);
+    std::string token;
+
+    while (getline(stream, token, delimiter)) {
+        tokens.push_back(token);
     }
+    return tokens;
+}
+
+void nts::Parser::verifySyntax(std::vector<std::string> tokens)
+{
+    for (auto token : tokens) {
+        for (size_t i = 0; Keywords[i] != ""; i++) {
+            if (! this->has_components_section && tokens.at(0) == Keywords[1]) {
+                this->has_components_section = true;
+                return;
+            }
+            if (! this->has_links_section && tokens.at(0) == Keywords[1]) {
+                this->has_links_section = true;
+                return;
+            }
+            if (token == Keywords[i] || token[0] == (*Keywords)[3])
+                return;
+        }
+    }
+   throw ParserSyntaxException("Parser : invalid token");
 }
