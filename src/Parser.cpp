@@ -120,16 +120,17 @@ std::vector<std::string> nts::Parser::splitStr(std::string &str, char delimiter)
 
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
 {
+    if (tokens.at(0).find(Keywords[0]) != std::string::npos) {
+        this->has_components_section = true;
+        return;
+    }
+    if (tokens.at(0).find(Keywords[1]) != std::string::npos) {
+        this->has_links_section = true;
+        return;
+    }
     for (auto token : tokens) {
         for (size_t i = 0; Keywords[i] != ""; i++) {
-            if (! this->has_components_section && tokens.at(0) == Keywords[1]) {
-                this->has_components_section = true;
-                return;
-            }
-            if (! this->has_links_section && tokens.at(0) == Keywords[1]) {
-                this->has_links_section = true;
-                return;
-            }
+
             if (token.find(Keywords[i]) != std::string::npos) 
                 return;
         }
