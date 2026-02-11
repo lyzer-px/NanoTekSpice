@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -129,7 +130,7 @@ void nts::Parser::verifySyntax(std::vector<std::string> tokens)
                 this->has_links_section = true;
                 return;
             }
-            if (token == Keywords[i] || token[0] == (*Keywords)[3])
+            if (std::find(token.begin(), token.end() Keywords[i])) 
                 return;
         }
     }
