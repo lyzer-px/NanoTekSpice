@@ -130,7 +130,7 @@ void nts::Parser::verifySyntax(std::vector<std::string> tokens)
                 this->has_links_section = true;
                 return;
             }
-            if (std::find(token.begin(), token.end() Keywords[i])) 
+            if (token.find(Keywords[i]) != std::string::npos) 
                 return;
         }
     }
