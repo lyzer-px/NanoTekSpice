@@ -24,8 +24,23 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
 
+unit_tests: fclean
+	g++ -o unit_tests tests/*.cpp src/nothing.cpp -lcriterion --coverage
+
+tests_run: unit_tests
+	./unit_tests
+	gcovr --exclude tests/ --branches
+	gcovr --exclude tests/
+
 clean:
-	$(RM) $(OBJ)
+	rm -rf $(OBJ)
+	rm -rf *~
+	rm -rf #*#
+	rm -rf a.out
+	rm -rf vgcore*
+	rm -rf *.gcda
+	rm -rf *.gcno
+	rm -rf *.gcov
 
 fclean: clean
 	$(RM) $(NAME)

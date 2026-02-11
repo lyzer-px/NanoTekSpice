@@ -36,7 +36,8 @@
 *.exe
 *.out
 *.app
-bistroMatic
+nanotekspice
+unit_tests
 
 # debug information files
 *.dwo
@@ -50,4 +51,3 @@ CMakeLists.txt
 
 # test files
 test_main*
-TestFruit*
