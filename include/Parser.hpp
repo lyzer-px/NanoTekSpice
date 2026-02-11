@@ -28,14 +28,10 @@ using pin = std::size_t;
 using Component = std::string;
 using token = std::string;
 
-class Circuit;
-
-
 class Parser {
 public:
 
-    struct Link
-    {
+    struct Link {
         std::pair<chipsetName, pin> component1;
         std::pair<chipsetName, pin> component2;
     };
@@ -45,19 +41,11 @@ public:
 
     ~Parser() noexcept;
 
-    std::vector<std::pair<Component, chipsetName>> getChipsets() const noexcept;
-
-    std::vector<Link> getLinks() const noexcept;
-    void setCircuit(std::shared_ptr<Circuit> ptr) {this->_circuit = ptr;}
-    std::shared_ptr<Circuit> getCircuit() {return this->_circuit;}
-    
     void start();
-    void sanitize(std::string &str) const;
-    std::vector<std::string> splitStr(std::string &str, char delimiter) const;
 
-    void verifySyntax(std::vector<std::string> vec);
-    void addToCircuit(std::vector<std::string> tokens);
-
+    std::vector<std::pair<Component, chipsetName>> getChipsets() const noexcept;
+    std::vector<Link> getLinks() const noexcept;
+   
     class ParserFileException : public std::exception {
     public :
         explicit ParserFileException(std::string what) : _what(what) {}
@@ -82,10 +70,14 @@ public:
     };
 
 private:
+    void verifySyntax(std::vector<std::string> vec);
+    void addToCircuit(std::vector<std::string> tokens);
+    void sanitize(std::string &str) const;
+    std::vector<std::string> splitStr(std::string &str, char delimiter) const;
+
     std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
-    std::shared_ptr<Circuit> _circuit;
     bool has_components_section = false;
     bool has_links_section = false;
 };
