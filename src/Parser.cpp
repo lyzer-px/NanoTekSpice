@@ -13,8 +13,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "Circuit.hpp"
 #include "Parser.hpp"
+#include "StringUtils.hpp"
 
 const nts::token Keywords[] = {
     ".chipsets",  // Defines chipsets
@@ -65,73 +65,47 @@ const nts::token Keywords[] = {
 nts::Parser::Parser(const std::string &filename)
 {
     this->_stream = std::ifstream(filename);
-
-    if (this->_stream.fail())
-        throw ParserFileException();
-}
-
-nts::Parser::~Parser() noexcept
-{
-    if (this->_stream.is_open())
-        this->_stream.close();
 }
 
 void nts::Parser::start()
 {
     std::string line;
 
+    if (this->_stream.fail())
+        throw ParserFileException();
     while (std::getline(this->_stream, line)) {
         if (line[0] == '#')
             continue;
-        this->sanitize(line);
-        std::vector<std::string> tokens = this->splitStr(line, ' ');
-        #ifdef DEBUG
-            std::cout << "line: \""<< line << "\"" << std::endl;  
-        #endif
-        this->verifySyntax(tokens);
-        this->addToCircuit(tokens);
+        strutils::sanitize(line);
+        std::vector<std::string> tokens = strutils::splitStr(line, ' ');
+        try {
+            this->verifySyntax(tokens);
+        } catch (ParserSyntaxException &e) {
+            throw;
+        }
     }
     if (this->has_components_section == false || this->has_links_section == false)
-        throw ParserFileException("Invalid file format");
-}
-
-void nts::Parser::addToCircuit(std::vector<std::string>)
-{
-    return;
-}
-
-void nts::Parser::sanitize(std::string &str) const
-{
-    std::regex whitespaces("[\\s]+");
-    str = std::regex_replace(str, whitespaces, " ");
-}
-
-std::vector<std::string> nts::Parser::splitStr(std::string &str, char delimiter) const
-{
-    std::vector<std::string> tokens;
-    std::stringstream stream(str);
-    std::string token;
-
-    while (getline(stream, token, delimiter)) {
-        tokens.push_back(token);
-    }
-    return tokens;
+        throw ParserSyntaxException("Missing or invalid token");
 }
 
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
 {
-    if (tokens.at(0).find(Keywords[0]) != std::string::npos) {
+    if (tokens.at(0).length() >= Keywords[0].length() &&
+        tokens.at(0).substr(0, Keywords[0].length()) == Keywords[0] &&
+        tokens.at(0).length() == Keywords[0].length()) {
         this->has_components_section = true;
         return;
     }
-    if (tokens.at(0).find(Keywords[1]) != std::string::npos) {
+    if (tokens.at(0).length() >= Keywords[1].length() &&
+        tokens.at(0).substr(0, Keywords[1].length()) == Keywords[1] &&
+        tokens.at(0).length() == Keywords[0].length()) {
         this->has_links_section = true;
         return;
     }
     for (auto token : tokens) {
         for (size_t i = 0; Keywords[i] != ""; i++) {
-
-            if (token.find(Keywords[i]) != std::string::npos) 
+            if (token.substr(0, Keywords[i].length()).find(Keywords[i]) !=
+                std::string::npos) 
                 return;
         }
     }

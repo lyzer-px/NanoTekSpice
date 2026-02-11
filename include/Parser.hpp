@@ -39,7 +39,7 @@ public:
     explicit Parser(const std::string &filename);
     Parser(const Parser &parser) noexcept = delete;
 
-    ~Parser() noexcept;
+    ~Parser() noexcept {};
 
     void start();
 
@@ -71,9 +71,6 @@ public:
 
 private:
     void verifySyntax(std::vector<std::string> vec);
-    void addToCircuit(std::vector<std::string> tokens);
-    void sanitize(std::string &str) const;
-    std::vector<std::string> splitStr(std::string &str, char delimiter) const;
 
     std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
