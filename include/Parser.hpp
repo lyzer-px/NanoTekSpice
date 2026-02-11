@@ -44,7 +44,7 @@ public:
 
     ~Parser() noexcept;
 
-    std::vector<std::pair<void *, chipsetName>> getChipsets() const noexcept;
+    std::vector<std::pair<std::string, chipsetName>> getChipsets() const noexcept;
 
     std::vector<Link> getLinks() const noexcept;
     void setCircuit(std::shared_ptr<Circuit> ptr) {this->_circuit = ptr;}
@@ -81,7 +81,7 @@ public:
     };
 
 private:
-    std::vector<std::pair<void *, chipsetName>> _chipsets;
+    std::vector<std::pair<std::string, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
     std::shared_ptr<Circuit> _circuit;
