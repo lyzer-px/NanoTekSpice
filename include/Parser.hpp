@@ -25,6 +25,7 @@ namespace nts {
 using chipsetName = std::string;
 using chipsetType = std::string;
 using pin = std::size_t;
+using Component = std::string;
 using token = std::string;
 
 class Circuit;
@@ -44,7 +45,7 @@ public:
 
     ~Parser() noexcept;
 
-    std::vector<std::pair<std::string, chipsetName>> getChipsets() const noexcept;
+    std::vector<std::pair<Component, chipsetName>> getChipsets() const noexcept;
 
     std::vector<Link> getLinks() const noexcept;
     void setCircuit(std::shared_ptr<Circuit> ptr) {this->_circuit = ptr;}
@@ -81,7 +82,7 @@ public:
     };
 
 private:
-    std::vector<std::pair<std::string, chipsetName>> _chipsets;
+    std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
     std::shared_ptr<Circuit> _circuit;
