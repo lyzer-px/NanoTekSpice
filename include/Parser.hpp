@@ -36,7 +36,7 @@ public:
         std::pair<chipsetName, pin> component2;
     };
 
-    explicit Parser(const std::string &filename);
+    explicit Parser(const std::string &filename) noexcept;
     Parser(const Parser &parser) noexcept = delete;
 
     ~Parser() noexcept {};

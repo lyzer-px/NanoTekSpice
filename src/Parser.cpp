@@ -62,7 +62,7 @@ const nts::token Keywords[] = {
     ""            //sentinel  
 };
 
-nts::Parser::Parser(const std::string &filename)
+nts::Parser::Parser(const std::string &filename) noexcept
 {
     this->_stream = std::ifstream(filename);
 }
@@ -85,7 +85,7 @@ void nts::Parser::start()
         }
     }
     if (this->has_components_section == false || this->has_links_section == false)
-        throw ParserSyntaxException("Missing or invalid token");
+        throw ParserSyntaxException("Parser : Missing or invalid token");
 }
 
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
