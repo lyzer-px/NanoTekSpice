@@ -8,12 +8,7 @@
 #include "Shell.hpp"
 
 namespace shell {
-inline const char *ShellExitException::what() const noexcept
-{
-    return "";
-}
-
-inline const char *ShellCommandNotFound::what() const noexcept
+const char *ShellCommandNotFound::what() const noexcept
 {
     return _message.c_str();
 }

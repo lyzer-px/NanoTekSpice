@@ -8,20 +8,23 @@
 #include "IDefaultShellCommand.hpp"
 
 namespace shell {
-class ShellExit: public IDefaultShellCommand {
+template <typename ShellType>
+class ShellExit: public IDefaultShellCommand<ShellType> {
 public:
     ShellExit() = default;
 
     ~ShellExit() override = default;
 
-    bool operator()(Shell<IDefaultShellCommand> &shell,
+    bool operator()(ShellType &shell,
         std::vector<std::string> cmd) override;
 
-    bool execute(Shell<IDefaultShellCommand> &shell,
+    bool execute(ShellType &shell,
         std::vector<std::string> cmd) override;
 
-    static std::unique_ptr<IDefaultShellCommand> create();
+    static std::unique_ptr<IDefaultShellCommand<ShellType>> create();
 };
 }
+
+#include "../src/ShellExit.tpp"
 
 #endif //NANOTEKSPICE_SHELLEXIT_HPP

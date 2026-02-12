@@ -15,15 +15,6 @@
 #include "ShellExit.hpp"
 
 namespace shell {
-class ShellExitException: public std::exception {
-public:
-    ShellExitException() = default;
-
-    ~ShellExitException() override = default;
-
-    [[nodiscard]] const char *what() const noexcept override;
-};
-
 class ShellCommandNotFound: public std::exception {
 public:
     explicit ShellCommandNotFound(const std::string &commandName): _commandName{
@@ -41,17 +32,17 @@ private:
     std::string _message;
 };
 
-template <typename CommandBase = IDefaultShellCommand>
+template <typename CommandBase>
 class Shell {
 public:
     using ExternCommandFactory = FactoryTemplate<CommandBase, std::string>;
-    using ShellCommandFactory  = FactoryTemplate<IDefaultShellCommand,
+    using ShellCommandFactory  = FactoryTemplate<IDefaultShellCommand<Shell>,
         std::string>;
 
     Shell(): _name{"default_shell"},
         _prompt{"> "}
     {
-        _shellCommandFactory.registerCreator("exit", ShellExit::create);
+        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
     }
 
     virtual ~Shell() = default;
@@ -59,11 +50,15 @@ public:
     explicit Shell(std::string name, std::string prompt): _name
         {std::move(name)},
         _prompt{std::move(prompt)}
-    {}
+    {
+        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
+    }
 
     explicit Shell(std::string prompt): _name{"default_shell"},
         _prompt{std::move(prompt)}
-    {}
+    {
+        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
+    }
 
     bool isEmptyLine(const std::string &line) noexcept
     {
@@ -102,11 +97,11 @@ public:
             std::vector<std::string> cmd = split(line, ' ');
 
             try {
-                auto command = _shellCommandFactory.create(cmd[0]);
-                (*command)(*this, cmd);
+                const auto command = _shellCommandFactory.create(cmd[0]);
+                command->execute(*this, cmd);
             } catch (std::runtime_error &e) {
                 try {
-                    executeCommand(cmd);
+                    executeExternCommand(cmd);
                 } catch (const ShellCommandNotFound &except) {
                     std::cerr << except.what() << std::endl;
                 }
@@ -122,13 +117,11 @@ protected:
     ExternCommandFactory _externCommandFactory;
     ShellCommandFactory _shellCommandFactory;
 
-    virtual bool executeCommand(const std::vector<std::string> &cmd)
+    virtual bool executeExternCommand(const std::vector<std::string> &cmd)
     {
         throw ShellCommandNotFound{cmd[0]};
     }
 };
-
-template class Shell<IDefaultShellCommand>;
 
 bool isEmptyLine(const std::string &line) noexcept;
 }

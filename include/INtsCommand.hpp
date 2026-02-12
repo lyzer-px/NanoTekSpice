@@ -8,6 +8,7 @@
 #ifndef NANOTEKSPICE_INTSCOMMAND_HPP
 #define NANOTEKSPICE_INTSCOMMAND_HPP
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -31,6 +32,11 @@ public:
     virtual bool operator()(Circuit &circuit, std::vector<std::string> cmd) = 0;
 
     virtual bool execute(Circuit &circuit, std::vector<std::string> cmd) = 0;
+
+    static std::unique_ptr<INtsCommand> create()
+    {
+        throw std::runtime_error("INtsCommand: Should not be called");
+    }
 };
 }
 

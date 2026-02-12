@@ -14,6 +14,7 @@ namespace shell {
 template <typename CommandBase>
 class Shell;
 
+template <typename ShellType>
 class IDefaultShellCommand {
 public:
     IDefaultShellCommand() = default;
@@ -21,15 +22,15 @@ public:
     virtual ~IDefaultShellCommand() = default;
 
     virtual bool operator()(
-        Shell<IDefaultShellCommand> &shell,
+        ShellType &shell,
         std::vector<std::string> cmd) = 0;
 
-    virtual bool execute(Shell<IDefaultShellCommand> &shell,
+    virtual bool execute(ShellType &shell,
         std::vector<std::string> cmd) = 0;
 
     static std::unique_ptr<IDefaultShellCommand> create()
     {
-        return nullptr;
+        throw std::runtime_error("IDefaultShellCommand: Should not be called");
     }
 };
 }

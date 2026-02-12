@@ -5,11 +5,12 @@
 **
 */
 
+#include "NtsShell.hpp"
 #include "Shell.hpp"
 
 int main(int, char **)
 {
-    shell::Shell<> shell;
+    auto shell = nts::NtsShell();
     shell.run();
     return 84;
 }
