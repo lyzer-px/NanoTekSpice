@@ -7,20 +7,21 @@
 
 #ifndef NANOTEKSPICE_NTSDISPLAYCOMMAND_HPP
 #define NANOTEKSPICE_NTSDISPLAYCOMMAND_HPP
-#include "INtsCommand.hpp"
+
+#include "IShellCommand.hpp"
 
 namespace nts {
-class NtsDisplayCommand: public INtsCommand {
+class NtsDisplayCommand: public shell::IShellCommand {
 public:
     NtsDisplayCommand() = default;
 
     ~NtsDisplayCommand() override = default;
 
-    bool operator()(Circuit &circuit, std::vector<std::string> cmd) override;
+    bool operator()(shell::Shell &shell, std::vector<std::string> cmd) override;
 
-    bool execute(Circuit &circuit, std::vector<std::string> cmd) override;
+    bool execute(shell::Shell &shell, std::vector<std::string> cmd) override;
 
-    static std::unique_ptr<INtsCommand> create();
+    static std::unique_ptr<IShellCommand> create();
 };
 } // nts
 

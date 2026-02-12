@@ -15,13 +15,12 @@
 namespace nts {
 class Circuit;
 
-class NtsShell: public shell::Shell<nts::INtsCommand> {
+class NtsShell: public shell::Shell {
 public:
     NtsShell();
 
 private:
     std::unique_ptr<Circuit> _circuit;
-    bool executeExternCommand(const std::vector<std::string> &cmd) override;
 };
 } // nts
 

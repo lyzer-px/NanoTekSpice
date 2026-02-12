@@ -7,123 +7,42 @@
 
 #ifndef NANOTEKSPICE_SHELL_HPP
 #define NANOTEKSPICE_SHELL_HPP
-#include <iostream>
+
 #include <string>
 
 #include "FactoryTemplate.hpp"
-#include "IDefaultShellCommand.hpp"
-#include "ShellExit.hpp"
+#include "IShellCommand.hpp"
 
 namespace shell {
-class ShellCommandNotFound: public std::exception {
-public:
-    explicit ShellCommandNotFound(const std::string &commandName): _commandName{
-        commandName}
-    {
-        _message = _commandName + ": command not found";
-    }
-
-    ~ShellCommandNotFound() override = default;
-
-    [[nodiscard]] const char *what() const noexcept override;
-
-private:
-    std::string _commandName;
-    std::string _message;
-};
-
-template <typename CommandBase>
 class Shell {
 public:
-    using ExternCommandFactory = FactoryTemplate<CommandBase, std::string>;
-    using ShellCommandFactory  = FactoryTemplate<IDefaultShellCommand<Shell>,
-        std::string>;
+    using ExternCommandFactory = FactoryTemplate<IShellCommand, std::string>;
+    using ShellCommandFactory  = FactoryTemplate<IShellCommand, std::string>;
 
-    Shell(): _name{"default_shell"},
-        _prompt{"> "}
-    {
-        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
-    }
+    Shell();
 
     virtual ~Shell() = default;
 
-    explicit Shell(std::string name, std::string prompt): _name
-        {std::move(name)},
-        _prompt{std::move(prompt)}
-    {
-        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
-    }
+    explicit Shell(std::string name, std::string prompt);
 
-    explicit Shell(std::string prompt): _name{"default_shell"},
-        _prompt{std::move(prompt)}
-    {
-        _shellCommandFactory.registerCreator("exit", ShellExit<Shell<CommandBase>>::create);
-    }
+    explicit Shell(std::string prompt);
 
-    bool isEmptyLine(const std::string &line) noexcept
-    {
-        std::stringstream sstream{line};
-        std::string temp;
-
-        return !(sstream >> temp);
-    }
-
-    std::vector<std::string> split(const std::string &line, const char delim)
-    {
-        std::stringstream sstream{line};
-        std::string token;
-        std::vector<std::string> tokens;
-
-        while (std::getline(sstream, token, delim)) {
-            tokens.push_back(token);
-        }
-
-        return tokens;
-    }
-
-    void run()
-    {
-        std::string line;
-
-        while (true) {
-            std::cout << _prompt;
-            if (!std::getline(std::cin, line)) {
-                std::cout << std::endl;
-                return;
-            }
-            if (isEmptyLine(line)) {
-                continue;
-            }
-            std::vector<std::string> cmd = split(line, ' ');
-
-            try {
-                const auto command = _shellCommandFactory.create(cmd[0]);
-                command->execute(*this, cmd);
-            } catch (std::runtime_error &e) {
-                try {
-                    executeExternCommand(cmd);
-                } catch (const ShellCommandNotFound &except) {
-                    std::cerr << except.what() << std::endl;
-                }
-            } catch (const ShellExitException &) {
-                return;
-            }
-        }
-    }
+    void run();
 
 protected:
     std::string _name;
     std::string _prompt;
-    ExternCommandFactory _externCommandFactory;
+    // ExternCommandFactory _externCommandFactory;
     ShellCommandFactory _shellCommandFactory;
 
-    virtual bool executeExternCommand(const std::vector<std::string> &cmd)
-    {
-        throw ShellCommandNotFound{cmd[0]};
-    }
+    virtual bool executeExternCommand(const std::vector<std::string> &cmd);
 };
 
 bool isEmptyLine(const std::string &line) noexcept;
 }
+
+bool isEmptyLine(const std::string &line) noexcept;
+
+std::vector<std::string> split(const std::string &line, const char delim);
 
 #endif //NANOTEKSPICE_SHELL_HPP

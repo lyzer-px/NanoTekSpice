@@ -5,26 +5,25 @@
 #ifndef NANOTEKSPICE_SHELLEXIT_HPP
 #define NANOTEKSPICE_SHELLEXIT_HPP
 
-#include "IDefaultShellCommand.hpp"
+#include "IShellCommand.hpp"
 
 namespace shell {
-template <typename ShellType>
-class ShellExit: public IDefaultShellCommand<ShellType> {
+class ShellExit: public IShellCommand {
 public:
     ShellExit() = default;
 
     ~ShellExit() override = default;
 
-    bool operator()(ShellType &shell,
+    bool operator()(Shell &shell,
         std::vector<std::string> cmd) override;
 
-    bool execute(ShellType &shell,
+    bool execute(Shell &shell,
         std::vector<std::string> cmd) override;
 
-    static std::unique_ptr<IDefaultShellCommand<ShellType>> create();
+    static std::unique_ptr<IShellCommand> create();
 };
 }
 
-#include "../src/ShellExit.tpp"
+// #include "../src/ShellExit.tpp"
 
 #endif //NANOTEKSPICE_SHELLEXIT_HPP

@@ -5,30 +5,27 @@
 #ifndef NANOTEKSPICE_IDEFAULTSHELLCOMMAND_HPP
 #define NANOTEKSPICE_IDEFAULTSHELLCOMMAND_HPP
 
-#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
 
 namespace shell {
-template <typename CommandBase>
 class Shell;
 
-template <typename ShellType>
-class IDefaultShellCommand {
+class IShellCommand {
 public:
-    IDefaultShellCommand() = default;
+    IShellCommand() = default;
 
-    virtual ~IDefaultShellCommand() = default;
+    virtual ~IShellCommand() = default;
 
     virtual bool operator()(
-        ShellType &shell,
+        Shell &shell,
         std::vector<std::string> cmd) = 0;
 
-    virtual bool execute(ShellType &shell,
+    virtual bool execute(Shell &shell,
         std::vector<std::string> cmd) = 0;
 
-    static std::unique_ptr<IDefaultShellCommand> create()
+    static std::unique_ptr<IShellCommand> create()
     {
         throw std::runtime_error("IDefaultShellCommand: Should not be called");
     }

@@ -10,20 +10,21 @@
 #include <iostream>
 
 namespace nts {
-bool NtsDisplayCommand::operator()(Circuit &circuit,
+bool NtsDisplayCommand::operator()(shell::Shell &shell,
     std::vector<std::string> cmd)
 {
     std::clog << "Nts display command" << std::endl;
     return true;
 }
 
-bool NtsDisplayCommand::execute(Circuit &circuit, std::vector<std::string> cmd)
+bool NtsDisplayCommand::execute(shell::Shell &shell,
+    const std::vector<std::string> cmd)
 {
-    return operator ()(circuit, cmd);
+    return operator ()(shell, cmd);
 }
 
-std::unique_ptr<INtsCommand> NtsDisplayCommand::create()
+std::unique_ptr<shell::IShellCommand> NtsDisplayCommand::create()
 {
-    return std::unique_ptr<INtsCommand>(new NtsDisplayCommand());
+    return std::unique_ptr<IShellCommand>(new NtsDisplayCommand());
 }
 } // nts
