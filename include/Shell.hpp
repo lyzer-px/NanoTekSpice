@@ -32,7 +32,6 @@ public:
 protected:
     std::string _name;
     std::string _prompt;
-    // ExternCommandFactory _externCommandFactory;
     ShellCommandFactory _shellCommandFactory;
 
     virtual bool executeExternCommand(const std::vector<std::string> &cmd);

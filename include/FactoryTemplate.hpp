@@ -5,22 +5,23 @@
 ** FactoryTemplate
 */
 
-#ifndef NANOTEKSPICE_FACTORYTEMPLATE_HPP
-#define NANOTEKSPICE_FACTORYTEMPLATE_HPP
+#ifndef NANOTEKSPICE_FACTORY_TEMPLATE_HPP
+#define NANOTEKSPICE_FACTORY_TEMPLATE_HPP
 
 #include <functional>
 #include <memory>
 #include <sstream>
 #include <unordered_map>
 
-template <typename T, typename... Args>
+template <typename BaseClass, typename ConcreteClass, typename... Args>
 concept HasCreateMethod = requires(Args... args)
 {
-    { T::create(args...) } -> std::same_as<std::unique_ptr<T>>;
+    {
+        ConcreteClass::create(args...)
+    } -> std::same_as<std::unique_ptr<BaseClass>>;
 };
 
 template <typename BaseClass, typename KeyType, typename... Args>
-    requires HasCreateMethod<BaseClass, Args...>
 class FactoryTemplate {
 public:
     using CreatorCallable = std::function<std::unique_ptr<BaseClass>(Args...)>;
@@ -39,9 +40,11 @@ public:
 
     FactoryTemplate &operator=(const FactoryTemplate &&) = delete;
 
-    void registerCreator(KeyType key, CreatorCallable creator)
+    template <typename ConcreteClass>
+        requires HasCreateMethod<BaseClass, ConcreteClass>
+    void registerCreator(KeyType key)
     {
-        _creators[key] = creator;
+        _creators[key] = &ConcreteClass::create;
     }
 
     void unregisterCreator(KeyType key)
@@ -66,4 +69,4 @@ private:
     CreatorMap _creators;
 };
 
-#endif // NANOTEKSPICE_FACTORYTEMPLATE_HPP
+#endif // NANOTEKSPICE_FACTORY_TEMPLATE_HPP

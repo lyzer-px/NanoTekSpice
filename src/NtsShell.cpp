@@ -13,6 +13,6 @@
 namespace nts {
 NtsShell::NtsShell(): Shell("nts_shell", "> ")
 {
-    _shellCommandFactory.registerCreator("display", NtsDisplayCommand::create);
+    _shellCommandFactory.registerCreator<NtsDisplayCommand>("display");
 }
 } // nts

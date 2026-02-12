@@ -9,7 +9,6 @@
 #define NANOTEKSPICE_NTSSHELL_HPP
 
 #include "Circuit.hpp"
-#include "INtsCommand.hpp"
 #include "Shell.hpp"
 
 namespace nts {

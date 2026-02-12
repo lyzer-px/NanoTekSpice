@@ -24,11 +24,6 @@ public:
 
     virtual bool execute(Shell &shell,
         std::vector<std::string> cmd) = 0;
-
-    static std::unique_ptr<IShellCommand> create()
-    {
-        throw std::runtime_error("IDefaultShellCommand: Should not be called");
-    }
 };
 }
 

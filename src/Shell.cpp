@@ -17,20 +17,20 @@ namespace shell {
 Shell::Shell(): _name{"default_shell"},
     _prompt{"> "}
 {
-    _shellCommandFactory.registerCreator("exit", ShellExit::create);
+    _shellCommandFactory.registerCreator<ShellExit>("exit");
 }
 
 Shell::Shell(std::string name, std::string prompt): _name
     {std::move(name)},
     _prompt{std::move(prompt)}
 {
-    _shellCommandFactory.registerCreator("exit", ShellExit::create);
+    _shellCommandFactory.registerCreator<ShellExit>("exit");
 }
 
 Shell::Shell(std::string prompt): _name{"default_shell"},
     _prompt{std::move(prompt)}
 {
-    _shellCommandFactory.registerCreator("exit", ShellExit::create);
+    _shellCommandFactory.registerCreator<ShellExit>("exit");
 }
 
 void Shell::run()
