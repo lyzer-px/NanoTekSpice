@@ -5,7 +5,11 @@
 **
 */
 
+#include "Shell.hpp"
+
 int main(int, char **)
 {
+    Shell<IDefaultShellCommand> shell;
+    shell.run();
     return 84;
 }

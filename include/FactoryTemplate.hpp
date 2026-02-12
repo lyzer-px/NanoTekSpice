@@ -51,16 +51,15 @@ public:
 
     std::unique_ptr<BaseClass> create(const KeyType &key, Args... args)
     {
-        auto itt = std::find(_creators.begin(), _creators.end(), key);
-
-        if (itt == _creators.end()) {
-            std::stringstream sstream;
-
-            sstream << "No creator found for key: " << key;
-            throw std::runtime_error(sstream.str());
+        for (const auto &itt: _creators) {
+            if (itt.first == key) {
+                return itt.second(args...);
+            }
         }
 
-        return itt->second(args...);
+        std::stringstream sstream;
+        sstream << "No creator found for key: " << key;
+        throw std::runtime_error(sstream.str());
     }
 
 private:

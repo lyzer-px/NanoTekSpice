@@ -43,7 +43,8 @@ unit_tests
 *.dwo
 
 # CMake and make files
-cmake-build-debug
+cmake-build-debug/
+build/
 
 # Project config files
 .idea/

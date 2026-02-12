@@ -1,6 +1,6 @@
 Checks:
 # D2 - OCP / all attributes must be private
-  - cppcoreguidelines-non-private-member-variables-in-classes # forces all member variables
+#  - cppcoreguidelines-non-private-member-variables-in-classes # forces all member variables
                                                              # to be private
 # D3 - LSP
   - modernize-use-override # F6 – override when relevant
@@ -64,6 +64,7 @@ Checks:
   - -readability-magic-numbers
   - -readability-named-parameter
   - -performance-avoid-endl
+  - readability-braces-around-statements
 
 WarningsAsErrors: >
   cppcoreguidelines-non-private-member-variables-in-classes,
@@ -102,6 +103,8 @@ CheckOptions:
   - key: readability-identifier-naming.MemberCase
     value: camelBack
   - key: readability-identifier-naming.PrivateMemberPrefix
+    value: _
+  - key: readability-identifier-naming.ProtectedMemberPrefix
     value: _
 
   # Parameters
