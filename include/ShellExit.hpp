@@ -7,6 +7,7 @@
 
 #include "IDefaultShellCommand.hpp"
 
+namespace shell {
 class ShellExit: public IDefaultShellCommand {
 public:
     ShellExit() = default;
@@ -21,5 +22,6 @@ public:
 
     static std::unique_ptr<IDefaultShellCommand> create();
 };
+}
 
 #endif //NANOTEKSPICE_SHELLEXIT_HPP

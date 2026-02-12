@@ -9,6 +9,7 @@
 
 #include "Shell.hpp"
 
+namespace shell {
 bool ShellExit::operator()(Shell<> &,
     std::vector<std::string>)
 {
@@ -24,4 +25,5 @@ bool ShellExit::execute(Shell<> &shell,
 std::unique_ptr<IDefaultShellCommand> ShellExit::create()
 {
     return std::unique_ptr<IDefaultShellCommand>(new ShellExit());
+}
 }

@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+namespace shell {
 template <typename CommandBase>
 class Shell;
 
@@ -18,14 +19,6 @@ public:
     IDefaultShellCommand() = default;
 
     virtual ~IDefaultShellCommand() = default;
-
-    IDefaultShellCommand(const IDefaultShellCommand &) = default;
-
-    IDefaultShellCommand &operator=(const IDefaultShellCommand &) = default;
-
-    IDefaultShellCommand(IDefaultShellCommand &&) = default;
-
-    IDefaultShellCommand &operator=(IDefaultShellCommand &&) = default;
 
     virtual bool operator()(
         Shell<IDefaultShellCommand> &shell,
@@ -39,5 +32,6 @@ public:
         return nullptr;
     }
 };
+}
 
 #endif //NANOTEKSPICE_IDEFAULTSHELLCOMMAND_HPP

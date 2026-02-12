@@ -9,7 +9,7 @@
 
 int main(int, char **)
 {
-    Shell<IDefaultShellCommand> shell;
+    shell::Shell<> shell;
     shell.run();
     return 84;
 }

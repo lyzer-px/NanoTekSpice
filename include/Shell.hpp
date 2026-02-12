@@ -14,6 +14,7 @@
 #include "IDefaultShellCommand.hpp"
 #include "ShellExit.hpp"
 
+namespace shell {
 class ShellExitException: public std::exception {
 public:
     ShellExitException() = default;
@@ -130,5 +131,6 @@ protected:
 template class Shell<IDefaultShellCommand>;
 
 bool isEmptyLine(const std::string &line) noexcept;
+}
 
 #endif //NANOTEKSPICE_SHELL_HPP

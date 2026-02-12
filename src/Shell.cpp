@@ -7,17 +7,14 @@
 
 #include "Shell.hpp"
 
-inline const char * ShellExitException::what() const noexcept
+namespace shell {
+inline const char *ShellExitException::what() const noexcept
 {
     return "";
 }
 
-// inline ShellCommandNotFound::ShellCommandNotFound(const std::string& commandName)
-// {
-//     _message = commandName + ": command not found";
-// }
-
-inline const char * ShellCommandNotFound::what() const noexcept
+inline const char *ShellCommandNotFound::what() const noexcept
 {
     return _message.c_str();
+}
 }
