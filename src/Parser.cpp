@@ -91,14 +91,12 @@ void nts::Parser::start()
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
 {
     if (tokens.at(0).length() >= Keywords[0].length() &&
-        tokens.at(0).substr(0, Keywords[0].length()) == Keywords[0] &&
-        tokens.at(0).length() == Keywords[0].length()) {
+        tokens.at(0).substr(0, Keywords[0].length()) == Keywords[0]) {
         this->has_components_section = true;
         return;
     }
     if (tokens.at(0).length() >= Keywords[1].length() &&
-        tokens.at(0).substr(0, Keywords[1].length()) == Keywords[1] &&
-        tokens.at(0).length() == Keywords[0].length()) {
+        tokens.at(0).substr(0, Keywords[1].length()) == Keywords[1]) {
         this->has_links_section = true;
         return;
     }
