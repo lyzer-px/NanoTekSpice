@@ -5,6 +5,10 @@
 **
 */
 
+#include <iostream>
+
+#include "IComponent.hpp"
+#include "Input.hpp"
 #include "NtsShell.hpp"
 #include "Shell.hpp"
 

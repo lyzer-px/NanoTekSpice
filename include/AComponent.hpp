@@ -51,4 +51,6 @@ protected:
 };
 } // nts
 
+std::ostream &operator<<(std::ostream &outStream, const nts::Tristate &state);
+
 #endif //NANOTEKSPICE_ACOMPONENT_HPP
