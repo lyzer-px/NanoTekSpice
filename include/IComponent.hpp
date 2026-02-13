@@ -7,25 +7,26 @@
 
 #ifndef ICOMPONENT_HPP
 #define ICOMPONENT_HPP
-#include <cstddef>
+
+#include <cstdint>
 
 namespace nts {
-enum Tristate {
-    Undefined = (-true),
-    True      = true,
-    False     = false
+enum Tristate: std::uint8_t {
+    FALSE     = 0U,
+    TRUE      = 1U,
+    UNDEFINED = 2U
 };
 
 class IComponent {
 public :
     virtual ~IComponent() = default;
 
-    virtual void simulate(std::size_t tick) = 0;
+    virtual void simulate(const std::size_t &tick) = 0;
 
-    virtual Tristate compute(std::size_t pin) = 0;
+    virtual Tristate compute(const std::size_t &pin) = 0;
 
-    virtual void setLink(std::size_t pin, IComponent &other,
-        std::size_t otherPin) = 0;
+    virtual void setLink(const std::size_t &pin, IComponent &other,
+        const std::size_t &otherPin) = 0;
 };
 }
 

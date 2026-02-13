@@ -10,12 +10,21 @@
 #include <stdexcept>
 
 namespace nts {
-AComponent::AComponent(std::string name): _name{std::move(name)},
-    _numberOfPin{1}, _tick{0}
+Pin::Pin(): type{PinType::INPUT}, linkedComponent{nullptr}, pin{0}
 {}
 
-void AComponent::setLink(const std::size_t pin, IComponent &other,
-    std::size_t otherPin)
+Pin::Pin(const PinType &pinType, IComponent *component,
+    const std::size_t &pinNumber): type{pinType}, linkedComponent{component},
+    pin{pinNumber}
+{}
+
+AComponent::AComponent(std::string name): _name{std::move(name)},
+    _numberOfPin{1},
+    _tick{0}
+{}
+
+void AComponent::setLink(const std::size_t &pin, IComponent &other,
+    const std::size_t &otherPin)
 {
     if (pin > _numberOfPin || _pins.at(pin).type != PinType::OUTPUT) {
         throw std::runtime_error("Bad pin number");
@@ -24,7 +33,7 @@ void AComponent::setLink(const std::size_t pin, IComponent &other,
     _pins[pin].linkedComponent = &other;
 }
 
-void AComponent::simulate(std::size_t tick)
+void AComponent::simulate(const std::size_t &tick)
 {
     ++_tick;
 }

@@ -21,6 +21,11 @@ enum class PinType: std::uint8_t {
 };
 
 struct Pin {
+    Pin();
+
+    explicit Pin(const PinType &pinType, IComponent *component,
+        const std::size_t &pinNumber);
+
     PinType type;
     IComponent *linkedComponent;
     std::size_t pin;
@@ -30,10 +35,11 @@ class AComponent: public IComponent {
 public:
     explicit AComponent(std::string name);
 
-    void setLink(std::size_t pin, IComponent &other,
-        std::size_t otherPin) override;
+    void setLink(const std::size_t &pin, IComponent &other,
+        const std::size_t &otherPin) override;;
 
-    void simulate(std::size_t tick) override;
+    // void simulate(std::size_t tick) override;
+    void simulate(const std::size_t &tick) override;
 
 protected:
     std::string _type;
