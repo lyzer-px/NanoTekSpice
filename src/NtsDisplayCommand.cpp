@@ -10,8 +10,8 @@
 #include <iostream>
 
 namespace nts {
-bool NtsDisplayCommand::operator()(shell::Shell &shell,
-    std::vector<std::string> cmd)
+bool NtsDisplayCommand::operator()(shell::Shell &,
+    std::vector<std::string>)
 {
     std::clog << "Nts display command" << std::endl;
     return true;

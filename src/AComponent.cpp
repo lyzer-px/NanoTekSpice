@@ -24,7 +24,7 @@ AComponent::AComponent(std::string name): _name{std::move(name)},
 {}
 
 void AComponent::setLink(const std::size_t &pin, IComponent &other,
-    const std::size_t &otherPin)
+    const std::size_t &)
 {
     if (pin > _numberOfPin || _pins.at(pin).type != PinType::OUTPUT) {
         throw std::runtime_error("Bad pin number");
@@ -33,7 +33,7 @@ void AComponent::setLink(const std::size_t &pin, IComponent &other,
     _pins[pin].linkedComponent = &other;
 }
 
-void AComponent::simulate(const std::size_t &tick)
+void AComponent::simulate(const std::size_t &)
 {
     ++_tick;
 }
