@@ -65,6 +65,7 @@ Checks:
   - -readability-named-parameter
   - -performance-avoid-endl
   - readability-braces-around-statements
+  - -readability-suspicious-call-argument
 
 WarningsAsErrors: >
   cppcoreguidelines-non-private-member-variables-in-classes,
