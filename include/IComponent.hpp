@@ -11,7 +11,8 @@
 #include <cstdint>
 
 namespace nts {
-constexpr std::string INPUT_TYPE = "input";
+constexpr std::string INPUT_TYPE  = "input";
+constexpr std::string OUTPUT_TYPE = "output";
 
 enum Tristate: std::uint8_t {
     FALSE     = 0U,
