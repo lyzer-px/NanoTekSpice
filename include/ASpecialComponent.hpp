@@ -16,7 +16,6 @@ public:
     explicit ASpecialComponent(std::string name);
 
 private:
-    Tristate _state;
 };
 } // nts
 
