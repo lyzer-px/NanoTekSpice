@@ -38,8 +38,9 @@ public:
     void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) override;;
 
-    // void simulate(std::size_t tick) override;
     void simulate(const std::size_t &tick) override;
+
+    static PinType getPinType(const std::size_t &pin, IComponent &component);
 
 protected:
     std::string _type;
