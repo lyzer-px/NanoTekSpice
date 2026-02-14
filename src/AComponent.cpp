@@ -42,9 +42,9 @@ void AComponent::setLink(const std::size_t &pin, IComponent &other,
     }
 }
 
-void AComponent::simulate(const std::size_t &)
+void AComponent::simulate(const std::size_t &tick)
 {
-    ++_tick;
+    _tick = tick;
 }
 
 PinType AComponent::getPinType(const std::size_t &pin,
@@ -55,6 +55,7 @@ PinType AComponent::getPinType(const std::size_t &pin,
     return temp._pins[pin].type;
 }
 } // nts
+
 std::ostream &operator<<(std::ostream &outStream, const nts::Tristate &state)
 {
     switch (static_cast<int>(state)) {
