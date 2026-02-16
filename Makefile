@@ -25,7 +25,14 @@ $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
-	$(RM) $(OBJ)
+	rm -rf $(OBJ)
+	rm -rf *~
+	rm -rf #*#
+	rm -rf a.out
+	rm -rf vgcore*
+	rm -rf *.gcda
+	rm -rf *.gcno
+	rm -rf *.gcov
 
 fclean: clean
 	$(RM) $(NAME)
