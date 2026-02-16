@@ -109,7 +109,8 @@ void nts::Parser::start()
             throw ParserSyntaxException("Invalid pin");
         }
     }
-    if (this->_links.empty())
+    if (this->_links.empty() || this->_chipsets.empty() ||
+        ! this->has_links_section || ! this->has_components_section)
         throw ParserSyntaxException("Missing section"); 
 }
 
