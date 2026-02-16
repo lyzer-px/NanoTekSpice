@@ -83,8 +83,8 @@ private:
     std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
-    bool has_components_section = false;
-    bool has_links_section = false;
+    bool parsing_components_section = false;
+    bool parsing_links_section = false;
     bool bad_extention = false;
 };
 

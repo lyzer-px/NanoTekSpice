@@ -19,48 +19,38 @@
 #include "StringUtils.hpp"
 
 const nts::token Keywords[] = {
+    // special components
     ".chipsets:",  // Defines chipsets
     ".links:",     // Links between components
     "input",      // Input terminals
-    "i",           // input name ex: i0, i1 etc...
     "output",     // Output terminals
+    "true",       // true component 
+    "false",      // false component
+
+    // basic components
     "and",        // AND gate logic
-    "nand",       // NAND gate logic
     "or",         // OR gate logic
-    "nor",        // NOR gate logic
     "xor",        // XOR gate logic
     "not",        // NOT (inverter) gate logic
-    "4008",       // 4 bits adder
-    "4013",       // Dual Flip Flop
-    "4017",       // 10 bits Johnson decade
-    "4040",       // 12 bits counter
-    "4094",       // 8 bits shift register
-    "4512",       // 8 channel data selector
-    "4514",       // 4 bits decoder
-    "4801",       // Random access memory
-    "2716",       // Read-only memory (initialized from ./rom.bin)
-    "4027",       // Dual D Flip Flop
-    "4050",       // Buffer (Hex buffer IC)
-    "4060",       // 14-bit binary counter
-    "4075",       // AND-NAND gates
-    "4085",       // XOR-OR gates
-    "4501",       // Multiplexer (8-channel)
-    "4502",       // Demultiplexer (8-channel)
-    "4555",       // Monostable multivibrator
-    "7400",       // Quad 2-input NAND gate
-    "7402",       // Quad 2-input NOR gate
-    "7404",       // Hex inverter
-    "7408",       // Quad 2-input AND gate
-    "7410",       // Triple 3-input NAND gate
-    "7413",       // Dual 4-input NAND gate
-    "7417",       // Hex buffer/driver
-    "7432",       // Quad 2-input OR gate
-    "7450",       // Quad 2-input NOR gate
-    "7474",       // Dual D-type flip-flop
-    "7476",       // Dual JK flip-flop
-    "7486",       // Quad 2-input XOR gate
-    "7490",       // Decade counter
-    "7493",        // 4-bit binary counter
+    
+    // gates components
+    "4001",        // four NOR gates
+    "4011",        // four NAND gates
+    "4030",        // four XOR gates
+    "4069",        // six INVERTER gates
+    "4071",        // four OR gates
+    "4081",        // four AND gates
+    
+    // advanced components
+    "4008",       // 4 bits adder.
+    "4013",       // Dual Flip Flop.
+    "4017",       // 10 bits Johnson decade.
+    "4040",       // 12 bits counter.
+    "4094",       // 8 bits shift register.
+    "4512",       // 8 channel data selector.
+    "4514",       // 4 bits decoder.
+    "4801",       // Random access memory.
+    "2716",       // Read only memory (memory initiliazed from ./rom.bin).
     ""            //sentinel  
 };
 
@@ -87,54 +77,56 @@ void nts::Parser::start()
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
         if (line == Keywords[0] && i == 0) {
-            this->has_components_section = true;
+            this->parsing_components_section = true;
+            this->parsing_links_section = false;
             i++;
             continue;
         }
         if (line == Keywords[1] && i != 0) {
-            this->has_links_section = true;
+            this->parsing_links_section = true;
+            this->parsing_components_section = false;
             continue;
         }
-        if (this->has_components_section && ! this->has_links_section) {
+        if (this->parsing_components_section && ! this->parsing_links_section) {
             verifyChipsetSyntax(tokens);
+            this->_chipsets.push_back(std::pair(tokens.at(0), tokens.at(1)));
             continue;
         }
-        std::vector<std::string> lft = strutils::splitStr(tokens.at(0), ':');
-        std::vector<std::string> rght = strutils::splitStr(tokens.at(1), ':'); 
-        try {
+        if (this->parsing_links_section && ! this->parsing_components_section) {
+            std::vector<std::string> lft = strutils::splitStr(tokens.at(0), ':');
+            std::vector<std::string> rght = strutils::splitStr(tokens.at(1), ':'); 
             verifyLinkSyntax(lft, rght);
             this->_links.push_back(Link(lft.at(0), lft.at(1), rght.at(0), rght.at(1)));
-        } catch (std::exception &e) {
-            throw;
         }
     }
-    if (this->_links.empty() || this->_chipsets.empty() ||
-        ! this->has_links_section || ! this->has_components_section)
+    if (this->_links.empty() || this->_chipsets.empty())
         throw ParserSyntaxException("Parser : Missing section"); 
 }
 
 void nts::Parser::verifyChipsetSyntax(std::vector<std::string> vec)
 {
-    std::cout << "vec0: " << vec.at(0) << std::endl;
     if (vec.size() != 2)
         throw ParserSyntaxException("Parser : Invalid token amount");
-    if (Keywords->find(vec.at(0).c_str()) == std::string::npos)
-        throw ParserSyntaxException("Parser : Invalid keyword");
+    for (auto keyword : Keywords) {
+        if (vec.at(0) == keyword)
+            return;
+    }
+    std::cout << "line : " << vec.at(0) << " " << vec.at(1) << std::endl;
+    throw ParserSyntaxException("Parser : Invalid keyword");
 }
 
 void nts::Parser::verifyLinkSyntax(std::vector<std::string> left, std::vector<std::string> right)
 {
-    bool valid_left;
-    bool valid_right;
+    bool valid_left = false;
+    bool valid_right = false;
 
     if (left.size() != 2 || right.size() != 2)
         throw ParserSyntaxException("Parser : Invalid token amount");
+
     for (auto chipset : this->_chipsets) {
-       if (chipset.first == left.at(0))
+        if (chipset.second == left.at(0))
             valid_left = true;
-    }
-    for (auto chipset : this->_chipsets) {
-       if (chipset.first == right.at(0))
+        if (chipset.second == right.at(0))
             valid_right = true;
     }
     if (! valid_left && ! valid_right)
