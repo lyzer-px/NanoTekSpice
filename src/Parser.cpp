@@ -6,6 +6,7 @@
 */
 
 #include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -17,8 +18,8 @@
 #include "StringUtils.hpp"
 
 const nts::token Keywords[] = {
-    ".chipsets",  // Defines chipsets
-    ".links",     // Links between components
+    ".chipsets:",  // Defines chipsets
+    ".links:",     // Links between components
     "input",      // Input terminals
     "i",           // input name ex: i0, i1 etc...
     "output",     // Output terminals
@@ -70,36 +71,38 @@ nts::Parser::Parser(const std::string &filename) noexcept
 void nts::Parser::start()
 {
     std::string line;
+    std::size_t i = 0;
 
     if (this->_stream.fail())
         throw ParserFileException();
-    while (std::getline(this->_stream, line)) {
+    for (; std::getline(this->_stream, line);) {
         if (line[0] == '#')
             continue;
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-        try {
-            this->verifySyntax(tokens);
-        } catch (ParserSyntaxException &e) {
-            throw;
+
+        if (line == Keywords[0] && i == 0)
+            this->has_components_section = true;
+        if (line == Keywords[1] && i != 0)
+            this->has_links_section = true;
+
+        verifySyntax(tokens);
+        if (this->has_components_section && ! this->has_links_section) {
+            this->_chipsets.push_back({tokens.at(0), tokens.at(1)});
+            continue;
         }
+        std::vector<std::string> left_oprnd = strutils::splitStr(tokens.at(0), ':');
+        std::vector<std::string> right_oprnd = strutils::splitStr(tokens.at(1), ':');
+        this->_links.push_back((Link){{left_oprnd.at(0), std::stoi(left_oprnd.at(1))},
+            {right_oprnd.at(0), std::stoi(right_oprnd.at(1))}});
+        i++;
     }
-    if (this->has_components_section == false || this->has_links_section == false)
-        throw ParserSyntaxException("Parser : Missing or invalid token");
+    if (i == 0)
+        throw ParserSyntaxException("Missing links section");
 }
 
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
 {
-    if (tokens.at(0).length() >= Keywords[0].length() &&
-        tokens.at(0).substr(0, Keywords[0].length()) == Keywords[0]) {
-        this->has_components_section = true;
-        return;
-    }
-    if (tokens.at(0).length() >= Keywords[1].length() &&
-        tokens.at(0).substr(0, Keywords[1].length()) == Keywords[1]) {
-        this->has_links_section = true;
-        return;
-    }
     for (auto token : tokens) {
         for (size_t i = 0; Keywords[i] != ""; i++) {
             if (token.substr(0, Keywords[i].length()).find(Keywords[i]) !=
