@@ -19,9 +19,11 @@
 #include "StringUtils.hpp"
 
 const nts::token Keywords[] = {
-    // special components
+    //sections
     ".chipsets:",  // Defines chipsets
     ".links:",     // Links between components
+    
+    // special components
     "input",      // Input terminals
     "output",     // Output terminals
     "true",       // true component 
