@@ -111,24 +111,23 @@ void nts::Parser::verifyChipsetSyntax(std::vector<std::string> vec)
         if (vec.at(0) == keyword)
             return;
     }
-    std::cout << "line : " << vec.at(0) << " " << vec.at(1) << std::endl;
-    throw ParserSyntaxException("Parser : Invalid keyword");
+    throw ParserSyntaxException("Parser : Invalid component");
 }
 
 void nts::Parser::verifyLinkSyntax(std::vector<std::string> left, std::vector<std::string> right)
 {
-    bool valid_left = false;
-    bool valid_right = false;
-
     if (left.size() != 2 || right.size() != 2)
         throw ParserSyntaxException("Parser : Invalid token amount");
+    if (this->componentExists(left.at(0)) && this->componentExists(right.at(0)))
+        return;
+    throw ParserSyntaxException("Parser: Invalid chipset to link");
+}
 
+bool nts::Parser::componentExists(std::string str)
+{
     for (auto chipset : this->_chipsets) {
-        if (chipset.second == left.at(0))
-            valid_left = true;
-        if (chipset.second == right.at(0))
-            valid_right = true;
+        if (chipset.second == str)
+            return true;
     }
-    if (! valid_left && ! valid_right)
-        throw ParserSyntaxException("Parser: Invalid chipset to link");
+    return false;
 }
