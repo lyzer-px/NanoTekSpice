@@ -21,7 +21,6 @@
 
 namespace nts {
 
-
 using chipsetName = std::string;
 using chipsetType = std::string;
 using pin = std::size_t;
@@ -32,6 +31,12 @@ class Parser {
 public:
 
     struct Link {
+        Link(chipsetName c1_name, std::string c1_pin, chipsetName c2_name, std::string c2_pin) {
+            this->component1.first = c1_name;
+            this->component1.second = std::stoul(c1_pin);
+            this->component2.first = c2_name;
+            this->component2.second = std::stoul(c2_pin);
+        }
         std::pair<chipsetName, pin> component1;
         std::pair<chipsetName, pin> component2;
     };
@@ -71,12 +76,12 @@ public:
 
 private:
     void verifySyntax(std::vector<std::string> vec);
-
     std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
     bool has_components_section = false;
     bool has_links_section = false;
+    bool bad_extention = false;
 };
 
 }

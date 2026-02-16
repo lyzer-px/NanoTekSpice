@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <ostream>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -65,6 +66,10 @@ const nts::token Keywords[] = {
 
 nts::Parser::Parser(const std::string &filename) noexcept
 {
+    if (!filename.ends_with(".nts")) {
+        this->bad_extention = true;
+        return;
+    }
     this->_stream = std::ifstream(filename);
 }
 
@@ -73,32 +78,39 @@ void nts::Parser::start()
     std::string line;
     std::size_t i = 0;
 
-    if (this->_stream.fail())
-        throw ParserFileException();
-    for (; std::getline(this->_stream, line);) {
+    if (this->_stream.fail() || this->bad_extention)
+        throw ParserFileException("Invalid file");
+    while (std::getline(this->_stream, line)) {
         if (line[0] == '#')
             continue;
+
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-
-        if (line == Keywords[0] && i == 0)
-            this->has_components_section = true;
-        if (line == Keywords[1] && i != 0)
-            this->has_links_section = true;
-
         verifySyntax(tokens);
-        if (this->has_components_section && ! this->has_links_section) {
-            this->_chipsets.push_back({tokens.at(0), tokens.at(1)});
+
+        if (line == Keywords[0] && i == 0) {
+            this->has_components_section = true;
+            i++;
             continue;
         }
-        std::vector<std::string> left_oprnd = strutils::splitStr(tokens.at(0), ':');
-        std::vector<std::string> right_oprnd = strutils::splitStr(tokens.at(1), ':');
-        this->_links.push_back((Link){{left_oprnd.at(0), std::stoi(left_oprnd.at(1))},
-            {right_oprnd.at(0), std::stoi(right_oprnd.at(1))}});
-        i++;
+        if (line == Keywords[1] && i != 0) {
+            this->has_links_section = true;
+            continue;
+        }
+        if (this->has_components_section && ! this->has_links_section) {
+            this->_chipsets.push_back(std::pair(tokens.at(0), tokens.at(1)));
+            continue;
+        }
+        std::vector<std::string> lft = strutils::splitStr(tokens.at(0), ':');
+        std::vector<std::string> rght = strutils::splitStr(tokens.at(1), ':'); 
+        try {
+            this->_links.push_back(Link(lft.at(0), lft.at(1), rght.at(0), rght.at(1)));
+        } catch (std::exception &e) {
+            throw ParserSyntaxException("Invalid pin");
+        }
     }
-    if (i == 0)
-        throw ParserSyntaxException("Missing links section");
+    if (this->_links.empty())
+        throw ParserSyntaxException("Missing section"); 
 }
 
 void nts::Parser::verifySyntax(std::vector<std::string> tokens)
