@@ -79,15 +79,13 @@ void nts::Parser::start()
     std::size_t i = 0;
 
     if (this->_stream.fail() || this->bad_extention)
-        throw ParserFileException("Invalid file");
+        throw ParserFileException("Parser : Invalid file");
     while (std::getline(this->_stream, line)) {
-        if (line[0] == '#')
+        if (line[0] == '#') {
             continue;
-
+        }
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-        verifySyntax(tokens);
-
         if (line == Keywords[0] && i == 0) {
             this->has_components_section = true;
             i++;
@@ -98,30 +96,47 @@ void nts::Parser::start()
             continue;
         }
         if (this->has_components_section && ! this->has_links_section) {
-            this->_chipsets.push_back(std::pair(tokens.at(0), tokens.at(1)));
+            verifyChipsetSyntax(tokens);
             continue;
         }
         std::vector<std::string> lft = strutils::splitStr(tokens.at(0), ':');
         std::vector<std::string> rght = strutils::splitStr(tokens.at(1), ':'); 
         try {
+            verifyLinkSyntax(lft, rght);
             this->_links.push_back(Link(lft.at(0), lft.at(1), rght.at(0), rght.at(1)));
         } catch (std::exception &e) {
-            throw ParserSyntaxException("Invalid pin");
+            throw;
         }
     }
     if (this->_links.empty() || this->_chipsets.empty() ||
         ! this->has_links_section || ! this->has_components_section)
-        throw ParserSyntaxException("Missing section"); 
+        throw ParserSyntaxException("Parser : Missing section"); 
 }
 
-void nts::Parser::verifySyntax(std::vector<std::string> tokens)
+void nts::Parser::verifyChipsetSyntax(std::vector<std::string> vec)
 {
-    for (auto token : tokens) {
-        for (size_t i = 0; Keywords[i] != ""; i++) {
-            if (token.substr(0, Keywords[i].length()).find(Keywords[i]) !=
-                std::string::npos) 
-                return;
-        }
+    std::cout << "vec0: " << vec.at(0) << std::endl;
+    if (vec.size() != 2)
+        throw ParserSyntaxException("Parser : Invalid token amount");
+    if (Keywords->find(vec.at(0).c_str()) == std::string::npos)
+        throw ParserSyntaxException("Parser : Invalid keyword");
+}
+
+void nts::Parser::verifyLinkSyntax(std::vector<std::string> left, std::vector<std::string> right)
+{
+    bool valid_left;
+    bool valid_right;
+
+    if (left.size() != 2 || right.size() != 2)
+        throw ParserSyntaxException("Parser : Invalid token amount");
+    for (auto chipset : this->_chipsets) {
+       if (chipset.first == left.at(0))
+            valid_left = true;
     }
-   throw ParserSyntaxException("Parser : invalid token");
+    for (auto chipset : this->_chipsets) {
+       if (chipset.first == right.at(0))
+            valid_right = true;
+    }
+    if (! valid_left && ! valid_right)
+        throw ParserSyntaxException("Parser: Invalid chipset to link");
 }

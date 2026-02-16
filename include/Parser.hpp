@@ -76,6 +76,10 @@ public:
 
 private:
     void verifySyntax(std::vector<std::string> vec);
+    void verifyLinkSyntax(std::vector<std::string> left, std::vector<std::string> right);
+    void verifyChipsetSyntax(std::vector<std::string> tokens);
+    void verifySyntax(std::string str);
+
     std::vector<std::pair<Component, chipsetName>> _chipsets;
     std::vector<Link> _links;
     std::ifstream _stream;
