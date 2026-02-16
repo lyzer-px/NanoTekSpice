@@ -33,6 +33,7 @@ fclean: clean
 re: fclean all
 
 debug: CXXFLAGS += -g3
+debug: CXXFLAGS += -DDEBUG
 debug: re
 
 .PHONY: all clean fclean re debug tests_run
