@@ -64,8 +64,11 @@ Checks:
   - -readability-magic-numbers
   - -readability-named-parameter
   - -performance-avoid-endl
-  - readability-braces-around-statements
+  - -readability-braces-around-statements
   - -readability-suspicious-call-argument
+  - -cppcoreguidelines-special-member-functions
+
+HeaderFilterRegex: '^(src|include)/.*'
 
 WarningsAsErrors: >
   cppcoreguidelines-non-private-member-variables-in-classes,
@@ -83,6 +86,10 @@ WarningsAsErrors: >
   google-readability-casting,
   google-build-using-namespace,
   cppcoreguidelines-prefer-member-initializer,
+  modernize-avoid-c-arrays,
+  modernize-use-emplace,
+  performance-for-range-copy,
+  modernize-use-equals-default,
 
 CheckOptions:
 # N3 - Functions (and methods)

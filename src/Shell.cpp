@@ -49,27 +49,23 @@ void Shell::run()
         std::vector<std::string> cmd = split(line, ' ');
 
         try {
-            const auto command = _shellCommandFactory.create(cmd[0]);
-            command->execute(*this, cmd);
-        } catch (std::runtime_error &e) {
-            try {
-                executeExternCommand(cmd);
-            } catch (const ShellCommandNotFound &except) {
-                std::cerr << except.what() << std::endl;
-            }
+            executeCommand(cmd);
         } catch (const ShellExitException &) {
             return;
         }
     }
 }
 
-bool Shell::executeExternCommand(const std::vector<std::string> &cmd)
+bool Shell::executeCommand(const std::vector<std::string> &cmd)
 {
     try {
         const auto command = _shellCommandFactory.create(cmd[0]);
         return command->execute(*this, cmd);
+    } catch (const ShellExitException &) {
+        throw;
     } catch (const std::exception &e) {
-        throw ShellCommandNotFound(cmd[0]);
+        std::cerr << cmd[0] << ": command not found" << std::endl;
+        return false;
     }
 }
 
