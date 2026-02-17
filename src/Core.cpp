@@ -7,10 +7,9 @@
 
 #include "Core.hpp"
 #include <exception>
-#include <iostream>
 #include <utility>
 
-nts::Core::Core(std::string filename) noexcept : _parser(std::move(filename)) {}
+nts::Core::Core(const std::string &filename) noexcept : _parser(filename) {}
 
 void nts::Core::run()
 {

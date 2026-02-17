@@ -18,7 +18,7 @@
 namespace nts {
 class Core {
 public:
-    explicit Core(std::string &filename) noexcept;
+    explicit Core(const std::string &filename) noexcept;
     explicit Core(Core &core) noexcept = delete;
 
     void run();
