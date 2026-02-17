@@ -8,7 +8,7 @@
 #include "Core.hpp"
 #include <iostream>
 
-int main(int argc, char **argv)
+int main(const int argc, char **argv)
 {
     if (argc != 2) {
         std::cout << "Invalid argument count" << std::endl;
@@ -16,6 +16,8 @@ int main(int argc, char **argv)
     }
     try {
         nts::Core core(argv[1]);
+
+        core.run();
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 84;

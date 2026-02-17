@@ -14,4 +14,12 @@ Output::Output(std::string name): ASpecialComponent(std::move(name))
     _value   = Tristate::UNDEFINED;
     _pins[1] = Pin{PinType::INPUT, nullptr, 0};
 }
+
+Tristate Output::compute(const std::size_t &pin)
+{
+    if (pin != 1) {
+        throw std::invalid_argument("Bad pin number");
+    }
+    return _pins[pin].linkedComponent->compute(_pins[pin].pin);
+}
 } // nts

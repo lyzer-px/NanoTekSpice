@@ -29,9 +29,11 @@ public:
     void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) override;
 
-    void setChipset(std::vector<std::pair<ChipsetType, ChipsetName>> &chipsets);
+    void setChipset(std::vector<std::pair<ChipsetType, ChipsetName>> &&chipsets);
 
-    void linkChipsets(std::vector<Link> &links);
+    void linkChipsets(std::vector<Link> &&links);
+
+    // void display() const noexcept;
 
 private:
     std::vector<IComponent *> _inputs;
