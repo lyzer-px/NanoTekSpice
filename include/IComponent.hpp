@@ -9,6 +9,7 @@
 #define ICOMPONENT_HPP
 
 #include <cstdint>
+#include <string>
 
 namespace nts {
 enum Tristate: std::uint8_t {
@@ -27,6 +28,8 @@ public :
 
     virtual void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) = 0;
+
+    virtual std::string getName() const noexcept = 0;
 };
 }
 
