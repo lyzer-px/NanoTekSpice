@@ -82,13 +82,13 @@ void nts::Parser::start()
         }
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-        if (line == KEYWORDS[0] && itt == 0) {
+        if (tokens[0] == KEYWORDS[0] && itt == 0) {
             this->_parsingComponentsSection = true;
             this->_parsingLinksSection      = false;
             itt++;
             continue;
         }
-        if (line == KEYWORDS[1] && itt != 0) {
+        if (tokens[0] == KEYWORDS[1] && itt != 0) {
             this->_parsingLinksSection      = true;
             this->_parsingComponentsSection = false;
             continue;
