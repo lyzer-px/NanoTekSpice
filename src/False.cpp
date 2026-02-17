@@ -14,4 +14,9 @@ False::False(std::string name): ASpecialComponent{std::move(name)}
     _value   = Tristate::FALSE;
     _pins[1] = Pin{PinType::OUTPUT, nullptr, 0};
 }
+
+std::unique_ptr<IComponent> False::create(std::string name)
+{
+    return std::make_unique<False>(std::move(name));
+}
 } // nts

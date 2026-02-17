@@ -23,4 +23,9 @@ void Clock::simulate(const std::size_t &tick)
 
     _tick = tick;
 }
+
+std::unique_ptr<IComponent> Clock::create(std::string name)
+{
+    return std::make_unique<Clock>(std::move(name));
+}
 } // nts
