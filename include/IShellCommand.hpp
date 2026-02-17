@@ -5,7 +5,6 @@
 #ifndef NANOTEKSPICE_IDEFAULTSHELLCOMMAND_HPP
 #define NANOTEKSPICE_IDEFAULTSHELLCOMMAND_HPP
 
-#include <memory>
 #include <string>
 #include <vector>
 

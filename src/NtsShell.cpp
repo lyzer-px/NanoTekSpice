@@ -5,8 +5,9 @@
 ** NtsShell
 */
 
-#include "NtsShell.hpp"
+#include <iostream>
 
+#include "NtsShell.hpp"
 #include "NtsDisplayCommand.hpp"
 #include "ShellCommandNotFound.hpp"
 
