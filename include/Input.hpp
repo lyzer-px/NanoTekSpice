@@ -7,6 +7,7 @@
 
 #ifndef NANOTEKSPICE_INPUT_HPP
 #define NANOTEKSPICE_INPUT_HPP
+
 #include "ASpecialComponent.hpp"
 
 namespace nts {

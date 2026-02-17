@@ -42,6 +42,8 @@ public:
 
     static PinType getPinType(const std::size_t &pin, IComponent &component);
 
+    std::string getName() override;
+
 protected:
     std::string _type;
     std::string _name;

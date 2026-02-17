@@ -54,6 +54,11 @@ PinType AComponent::getPinType(const std::size_t &pin,
 
     return temp._pins[pin].type;
 }
+
+std::string AComponent::getName()
+{
+    return _name;
+}
 } // nts
 
 std::ostream &operator<<(std::ostream &outStream, const nts::Tristate &state)

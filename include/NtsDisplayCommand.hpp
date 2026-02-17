@@ -8,6 +8,8 @@
 #ifndef NANOTEKSPICE_NTSDISPLAYCOMMAND_HPP
 #define NANOTEKSPICE_NTSDISPLAYCOMMAND_HPP
 
+#include <memory>
+
 #include "IShellCommand.hpp"
 
 namespace nts {

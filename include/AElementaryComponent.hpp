@@ -7,6 +7,7 @@
 
 #ifndef NANOTEKSPICE_AELEMENTARYCOMPONENT_HPP
 #define NANOTEKSPICE_AELEMENTARYCOMPONENT_HPP
+
 #include <vector>
 
 #include "AComponent.hpp"

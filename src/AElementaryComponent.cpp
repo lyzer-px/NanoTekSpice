@@ -14,9 +14,9 @@ AElementaryComponent::AElementaryComponent(std::string name): AComponent{
     std::move(name)}
 {
     _numberOfPin = 3;
-    _pins[1] = Pin{PinType::INPUT, nullptr, 0};
-    _pins[2] = Pin{PinType::INPUT, nullptr, 0};
-    _pins[3] = Pin{PinType::OUTPUT, nullptr, 0};
+    _pins[1]     = Pin{PinType::INPUT, nullptr, 0};
+    _pins[2]     = Pin{PinType::INPUT, nullptr, 0};
+    _pins[3]     = Pin{PinType::OUTPUT, nullptr, 0};
 }
 
 Tristate AElementaryComponent::compute(const std::size_t &pin)

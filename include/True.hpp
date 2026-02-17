@@ -7,6 +7,7 @@
 
 #ifndef NANOTEKSPICE_TRUE_HPP
 #define NANOTEKSPICE_TRUE_HPP
+
 #include "ASpecialComponent.hpp"
 
 namespace nts {

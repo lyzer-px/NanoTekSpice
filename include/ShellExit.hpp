@@ -5,6 +5,8 @@
 #ifndef NANOTEKSPICE_SHELLEXIT_HPP
 #define NANOTEKSPICE_SHELLEXIT_HPP
 
+#include <memory>
+
 #include "IShellCommand.hpp"
 
 namespace shell {

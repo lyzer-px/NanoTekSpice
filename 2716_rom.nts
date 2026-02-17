@@ -1,0 +1,28 @@
+# 2048 Bytes ROM (2716)
+#
+#             addr_05 -3-+
+#           addr_04 -4-+ | +-2- addr_06
+#         addr_03 -5-+ | | | +-1- addr_07
+#       addr_02 -6-+ | | | | | +-23- addr_08
+#     addr_01 -7-+ | | | | | | | +-22- addr_09
+#   addr_00 -8-+ | | | | | | | | | +-19- addr_10
+#              | | | | | | | | | | |
+#            +-v-v-v-v-v-v-v-v-v-v-v-+
+#            |                       |
+# enable -18->                  ign -<-12-
+#            |                       |
+#        -21->- ign             ign -<-19-
+#            |                       |
+#   read -20->                  ign -<-24-
+#            | 2716 ROM              |
+#            +----v-v-v-v-v-v-v-v----+
+#                 | | | | | | | |
+#        out_0 -9-+ | | | | | | +-17- out_7
+#         out_1 -10-+ | | | | +-16- out_6
+#           out_2 -11-+ | | +-15- out_5
+#             out_3 -13-+ +-14- out_4
+.chipsets:
+input enable
+output out_0
+.links:
+enable:1 out_0:1
