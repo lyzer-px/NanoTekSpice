@@ -39,6 +39,6 @@ private:
     std::vector<std::unique_ptr<IComponent>> _chipsets;
     ComponentFactory _factory;
 };
-} // nts
 
-#endif //NANOTEKSPICE_CIRCUIT_HPP
+}
+#endif

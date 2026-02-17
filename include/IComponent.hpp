@@ -12,6 +12,12 @@
 #include <string>
 
 namespace nts {
+constexpr std::string INPUT_TYPE  = "input";
+constexpr std::string OUTPUT_TYPE = "output";
+constexpr std::string TRUE_TYPE   = "true";
+constexpr std::string FALSE_TYPE  = "false";
+constexpr std::string CLOCK_TYPE  = "clock";
+
 enum Tristate: std::uint8_t {
     FALSE     = 0U,
     TRUE      = 1U,
