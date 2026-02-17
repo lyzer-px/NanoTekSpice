@@ -10,11 +10,23 @@
 #include <algorithm>
 #include <iostream>
 #include <ranges>
+
+#include "Clock.hpp"
+#include "False.hpp"
+#include "Input.hpp"
+#include "Output.hpp"
 #include "Parser.hpp"
+#include "True.hpp"
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}
-{}
+{
+    _factory.registerCreator<Input>(INPUT_TYPE);
+    _factory.registerCreator<Output>(OUTPUT_TYPE);
+    _factory.registerCreator<True>(TRUE_TYPE);
+    _factory.registerCreator<False>(FALSE_TYPE);
+    _factory.registerCreator<Clock>(CLOCK_TYPE);
+}
 
 void Circuit::simulate(const std::size_t &tick)
 {
@@ -57,7 +69,8 @@ void Circuit::setChipset(
         try {
             auto component = _factory.create(chipsetType, chipsetName);
 
-            if (chipsetType == INPUT_TYPE) {
+            if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
+                chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
                 _inputs.push_back(component.get());
             }
             if (chipsetType == OUTPUT_TYPE) {

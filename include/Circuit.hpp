@@ -33,8 +33,6 @@ public:
 
     void linkChipsets(std::vector<Link> &&links);
 
-    // void display() const noexcept;
-
 private:
     std::vector<IComponent *> _inputs;
     std::vector<IComponent *> _output;
