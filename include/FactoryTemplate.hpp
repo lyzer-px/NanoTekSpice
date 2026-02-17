@@ -41,7 +41,7 @@ public:
     FactoryTemplate &operator=(const FactoryTemplate &&) = delete;
 
     template <typename ConcreteClass>
-        requires HasCreateMethod<BaseClass, ConcreteClass>
+        requires HasCreateMethod<BaseClass, ConcreteClass, Args...>
     void registerCreator(KeyType key)
     {
         _creators[key] = &ConcreteClass::create;
@@ -54,11 +54,10 @@ public:
 
     std::unique_ptr<BaseClass> create(const KeyType &key, Args... args)
     {
-        for (const auto &itt: _creators) {
-            if (itt.first == key) {
-                return itt.second(args...);
-            }
-        }
+        const auto itt = _creators.find(key);
+
+        if (itt != _creators.end())
+            return (*itt).second(args...);
 
         std::stringstream sstream;
         sstream << "No creator found for key: " << key;
