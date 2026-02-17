@@ -38,8 +38,7 @@ public:
 
     Parser(const Parser &parser) noexcept = delete;
 
-    ~Parser() noexcept
-    {};
+    ~Parser() noexcept = default;
 
     void start();
 
@@ -53,8 +52,7 @@ public:
         explicit ParserFileException(std::string what): _what(std::move(what))
         {}
 
-        explicit ParserFileException()
-        {}
+        explicit ParserFileException() = default;
 
         const char *what() const noexcept override
         {
