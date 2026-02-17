@@ -1,12 +1,19 @@
-//
-// Created by kotti on 12/02/2026.
-//
+/*
+** EPITECH PROJECT, 2026
+** OOP
+** File description:
+** 
+*/
 
-#ifndef NANOTEKSPICE_CIRCUIT_HPP
-#define NANOTEKSPICE_CIRCUIT_HPP
+#ifndef CIRCUIT_HPP
+    #define CIRCUIT_HPP
 
 namespace nts {
-class Circuit {};
-} // nts
 
-#endif //NANOTEKSPICE_CIRCUIT_HPP
+class Circuit {
+public:
+    Circuit() {}
+};
+
+}
+#endif
