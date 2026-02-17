@@ -1,0 +1,17 @@
+/*
+** EPITECH PROJECT, 2026
+** nanotekspice
+** File description:
+** False
+*/
+
+#include "../include/False.hpp"
+
+namespace nts {
+False::False(std::string name): ASpecialComponent{std::move(name)}
+{
+    _type    = FALSE_TYPE;
+    _value   = Tristate::FALSE;
+    _pins[1] = Pin{PinType::OUTPUT, nullptr, 0};
+}
+} // nts
