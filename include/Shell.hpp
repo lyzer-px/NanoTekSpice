@@ -34,7 +34,7 @@ protected:
     std::string _prompt;
     ShellCommandFactory _shellCommandFactory;
 
-    virtual bool executeExternCommand(const std::vector<std::string> &cmd);
+    virtual bool executeCommand(const std::vector<std::string> &cmd);
 };
 
 bool isEmptyLine(const std::string &line) noexcept;

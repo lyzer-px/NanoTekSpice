@@ -52,3 +52,4 @@ CMakeLists.txt
 
 # test files
 test_main*
+*.nts
