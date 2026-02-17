@@ -11,7 +11,8 @@
 #include <memory>
 #include <utility>
 
-nts::Core::Core(const std::string &filename) noexcept: _parser(filename)
+nts::Core::Core(const std::string &filename) noexcept: _parser(filename),
+    _circuit{std::make_unique<Circuit>("circuit")}
 {}
 
 void nts::Core::run()
