@@ -13,19 +13,10 @@
 
 #include "AComponent.hpp"
 #include "FactoryTemplate.hpp"
+#include "Parser.hpp"
 
 namespace nts {
-using chipsetName      = std::string;
-using chipsetType      = std::string;
-using pin              = std::size_t;
-using Component        = std::string;
-using token            = std::string;
-using ComponentFactory = FactoryTemplate<IComponent, chipsetType, chipsetName>;
-
-struct Link {
-    std::pair<chipsetName, pin> component1;
-    std::pair<chipsetName, pin> component2;
-};
+using ComponentFactory = FactoryTemplate<IComponent, ChipsetType, ChipsetName>;
 
 class Circuit: public AComponent {
 public:
@@ -38,7 +29,7 @@ public:
     void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) override;
 
-    void setChipset(std::vector<std::pair<Component, chipsetName>> &chipsets);
+    void setChipset(std::vector<std::pair<ChipsetType, ChipsetName>> &chipsets);
 
     void linkChipsets(std::vector<Link> &links);
 
@@ -48,6 +39,6 @@ private:
     std::vector<std::unique_ptr<IComponent>> _chipsets;
     ComponentFactory _factory;
 };
-} // nts
 
-#endif //NANOTEKSPICE_CIRCUIT_HPP
+}
+#endif

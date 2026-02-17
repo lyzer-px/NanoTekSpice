@@ -8,6 +8,8 @@
 #include "../include/Circuit.hpp"
 
 #include <iostream>
+#include <ranges>
+#include "Parser.hpp"
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}
@@ -38,7 +40,7 @@ void Circuit::setLink(const std::size_t &pin, IComponent &other,
 }
 
 void Circuit::setChipset(
-    std::vector<std::pair<Component, chipsetName>> &chipsets)
+    std::vector<std::pair<ChipsetType, ChipsetName>> &chipsets)
 {
     for (const auto &[chipsetType, chipsetName]: chipsets) {
         try {

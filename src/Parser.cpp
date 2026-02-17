@@ -127,7 +127,7 @@ void nts::Parser::verifyChipsetSyntax(const std::vector<std::string> &tokens)
 {
     if (tokens.size() != 2)
         throw ParserSyntaxException("Parser : Invalid token amount");
-    for (auto keyword: KEYWORDS) {
+    for (const auto &keyword: KEYWORDS) {
         if (tokens.at(0) == keyword)
             return;
     }
@@ -141,4 +141,14 @@ bool nts::Parser::componentExists(const std::string &str)
             return true;
     }
     return false;
+}
+
+std::vector<std::pair<nts::ChipsetType, nts::ChipsetName>> nts::Parser::getChipsets() const noexcept
+{
+    return this->_chipsets;
+}
+
+std::vector<nts::Link> nts::Parser::getLinks() const noexcept
+{
+    return this->_links;
 }

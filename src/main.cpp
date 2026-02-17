@@ -5,23 +5,20 @@
 **
 */
 
+#include "Core.hpp"
 #include <iostream>
 
-#include "False.hpp"
-#include "IComponent.hpp"
-#include "Input.hpp"
-#include "NtsShell.hpp"
-#include "Output.hpp"
-#include "Shell.hpp"
-#include "True.hpp"
-
-int main(int, char **)
+int main(int argc, char **argv)
 {
-    auto input = std::unique_ptr<nts::IComponent>(new nts::False("in"));
-    nts::Circuit circuit("Circuit");
-
-    std::clog << "Input state: " << input->compute(1) << std::endl;
-    auto shell = nts::NtsShell();
-    shell.run();
-    return 84;
+    if (argc != 2) {
+        std::cout << "Invalid argument count" << std::endl;
+        return 84;
+    }
+    try {
+        nts::Core core(argv[1]);
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return 84;
+    }
+    return 0;
 }

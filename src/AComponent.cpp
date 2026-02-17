@@ -55,7 +55,7 @@ PinType AComponent::getPinType(const std::size_t &pin,
     return temp._pins[pin].type;
 }
 
-std::string AComponent::getName()
+std::string AComponent::getName() const noexcept
 {
     return _name;
 }

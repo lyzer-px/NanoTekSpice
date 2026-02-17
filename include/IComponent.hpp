@@ -9,6 +9,7 @@
 #define ICOMPONENT_HPP
 
 #include <cstdint>
+#include <string>
 
 namespace nts {
 constexpr std::string INPUT_TYPE  = "input";
@@ -34,7 +35,7 @@ public :
     virtual void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) = 0;
 
-    virtual std::string getName() = 0;
+    virtual std::string getName() const noexcept = 0;
 };
 }
 
