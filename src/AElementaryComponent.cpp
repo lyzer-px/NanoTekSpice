@@ -25,8 +25,13 @@ Tristate AElementaryComponent::compute(const std::size_t &pin)
         throw std::runtime_error("Bad pin number");
     }
 
-    const Tristate input1 = _pins[pin].linkedComponent->compute(1);
-    const Tristate input2 = _pins[pin].linkedComponent->compute(2);
+    Tristate input1 = Tristate::UNDEFINED;
+    Tristate input2 = Tristate::UNDEFINED;
+
+    if (_pins[1].linkedComponent != nullptr)
+        input1 = _pins[1].linkedComponent->compute(1);
+    if (_pins[2].linkedComponent != nullptr)
+        input2 = _pins[2].linkedComponent->compute(2);
 
     return _truthTable[input1][input2];
 }
