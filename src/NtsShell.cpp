@@ -9,12 +9,14 @@
 
 #include "NtsShell.hpp"
 #include "NtsDisplayCommand.hpp"
+#include "NtsSimulateCommand.hpp"
 #include "ShellCommandNotFound.hpp"
 
 namespace nts {
 NtsShell::NtsShell(): Shell("nts_shell", "> ")
 {
     _shellCommandFactory.registerCreator<NtsDisplayCommand>("display");
+    _shellCommandFactory.registerCreator<NtsSimulateCommand>("simulate");
 }
 
 void NtsShell::setCircuit(std::unique_ptr<IComponent> &circuit)

@@ -8,6 +8,7 @@
 #include "../include/AComponent.hpp"
 
 #include <ostream>
+#include <ranges>
 #include <stdexcept>
 
 namespace nts {
@@ -45,6 +46,11 @@ void AComponent::setLink(const std::size_t &pin, IComponent &other,
 void AComponent::simulate(const std::size_t &tick)
 {
     _tick = tick;
+
+    for (const auto &pin: _pins | std::views::values) {
+        if (pin.type == PinType::INPUT)
+            pin.linkedComponent->simulate(tick);
+    }
 }
 
 PinType AComponent::getPinType(const std::size_t &pin,

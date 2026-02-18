@@ -11,7 +11,7 @@
 #include <iostream>
 #include <ranges>
 
-#include "Clock.hpp"
+#include "../include/Clock.hpp"
 #include "False.hpp"
 #include "Input.hpp"
 #include "Output.hpp"
@@ -32,7 +32,7 @@ void Circuit::simulate(const std::size_t &tick)
 {
     ++_tick;
 
-    for (const auto &chipset: _chipsets) {
+    for (const auto &chipset: _output) {
         chipset->simulate(tick);
     }
 }

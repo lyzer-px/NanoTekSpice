@@ -5,7 +5,7 @@
 ** Clock
 */
 
-#include "Clock.hpp"
+#include "../include/Clock.hpp"
 
 namespace nts {
 Clock::Clock(std::string name): ASpecialComponent{std::move(name)}
