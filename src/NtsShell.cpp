@@ -9,6 +9,7 @@
 
 #include "NtsShell.hpp"
 #include "NtsDisplayCommand.hpp"
+#include "NtsLoopCommand.hpp"
 #include "NtsSimulateCommand.hpp"
 #include "ShellCommandNotFound.hpp"
 
@@ -17,6 +18,7 @@ NtsShell::NtsShell(): Shell("nts_shell", "> ")
 {
     _shellCommandFactory.registerCreator<NtsDisplayCommand>("display");
     _shellCommandFactory.registerCreator<NtsSimulateCommand>("simulate");
+    _shellCommandFactory.registerCreator<NtsLoopCommand>("loop");
 }
 
 void NtsShell::setCircuit(std::unique_ptr<IComponent> &circuit)
