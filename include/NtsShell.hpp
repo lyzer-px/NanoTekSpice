@@ -8,7 +8,7 @@
 #ifndef NANOTEKSPICE_NTSSHELL_HPP
 #define NANOTEKSPICE_NTSSHELL_HPP
 
-#include "Circuit.hpp"
+#include "IComponent.hpp"
 #include "Shell.hpp"
 
 namespace nts {
@@ -18,8 +18,12 @@ class NtsShell: public shell::Shell {
 public:
     NtsShell();
 
+    void setCircuit(std::unique_ptr<IComponent> &circuit);
+
+    IComponent *getCircuit() const noexcept;
+
 private:
-    std::unique_ptr<Circuit> _circuit;
+    std::unique_ptr<IComponent> _circuit;
 };
 } // nts
 

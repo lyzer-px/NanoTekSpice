@@ -8,6 +8,8 @@
 #ifndef NANOTEKSPICE_INPUT_HPP
 #define NANOTEKSPICE_INPUT_HPP
 
+#include <memory>
+
 #include "ASpecialComponent.hpp"
 
 namespace nts {
@@ -16,6 +18,8 @@ public:
     explicit Input(std::string name);
 
     ~Input() override = default;
+
+    static std::unique_ptr<IComponent> create(std::string name);
 };
 } // nts
 

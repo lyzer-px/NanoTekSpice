@@ -7,13 +7,26 @@
 
 #include "../include/Circuit.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <ranges>
+
+#include "Clock.hpp"
+#include "False.hpp"
+#include "Input.hpp"
+#include "Output.hpp"
 #include "Parser.hpp"
+#include "True.hpp"
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}
-{}
+{
+    _factory.registerCreator<Input>(INPUT_TYPE);
+    _factory.registerCreator<Output>(OUTPUT_TYPE);
+    _factory.registerCreator<True>(TRUE_TYPE);
+    _factory.registerCreator<False>(FALSE_TYPE);
+    _factory.registerCreator<Clock>(CLOCK_TYPE);
+}
 
 void Circuit::simulate(const std::size_t &tick)
 {
@@ -24,10 +37,20 @@ void Circuit::simulate(const std::size_t &tick)
     }
 }
 
-Tristate Circuit::compute(const std::size_t &pin)
+Tristate Circuit::compute(const std::size_t &)
 {
-    if (pin > _numberOfPin || pin < 1 || _pins[pin].type != PinType::OUTPUT) {
-        throw std::runtime_error("Bad pin number");
+    std::cout << "tick: " << _tick << std::endl;
+
+    std::cout << "input(s): " << std::endl;
+    for (const auto &input: _inputs) {
+        std::cout << "  " << input->getName() << ": " << input->compute(1) <<
+            std::endl;
+    }
+
+    std::cout << "output(s): " << std::endl;
+    for (const auto &output: _output) {
+        std::cout << "  " << output->getName() << ": " << output->compute(1) <<
+            std::endl;
     }
 
     return Tristate::UNDEFINED;
@@ -40,13 +63,14 @@ void Circuit::setLink(const std::size_t &pin, IComponent &other,
 }
 
 void Circuit::setChipset(
-    std::vector<std::pair<ChipsetType, ChipsetName>> &chipsets)
+    std::vector<std::pair<ChipsetType, ChipsetName>> &&chipsets)
 {
     for (const auto &[chipsetType, chipsetName]: chipsets) {
         try {
             auto component = _factory.create(chipsetType, chipsetName);
 
-            if (chipsetType == INPUT_TYPE) {
+            if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
+                chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
                 _inputs.push_back(component.get());
             }
             if (chipsetType == OUTPUT_TYPE) {
@@ -58,9 +82,18 @@ void Circuit::setChipset(
             std::cerr << e.what() << '\n';
         }
     }
+
+    std::ranges::sort(_inputs,
+        [](const IComponent *input1, const IComponent *input2) {
+            return input1->getName() < input2->getName();
+        });
+    std::ranges::sort(_output,
+        [](const IComponent *input1, const IComponent *input2) {
+            return input1->getName() < input2->getName();
+        });
 }
 
-void Circuit::linkChipsets(std::vector<Link> &links)
+void Circuit::linkChipsets(std::vector<Link> &&links)
 {
     for (const auto &[node1, node2]: links) {
         auto chipset1 = std::ranges::find_if(_chipsets,

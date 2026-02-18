@@ -16,4 +16,14 @@ NtsShell::NtsShell(): Shell("nts_shell", "> ")
 {
     _shellCommandFactory.registerCreator<NtsDisplayCommand>("display");
 }
+
+void NtsShell::setCircuit(std::unique_ptr<IComponent> &circuit)
+{
+    _circuit = std::move(circuit);
+}
+
+IComponent * NtsShell::getCircuit() const noexcept
+{
+    return _circuit.get();
+}
 } // nts

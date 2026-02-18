@@ -9,11 +9,15 @@
 
 #include <iostream>
 
+#include "NtsShell.hpp"
+
 namespace nts {
-bool NtsDisplayCommand::operator()(shell::Shell &,
+bool NtsDisplayCommand::operator()(shell::Shell &shell,
     std::vector<std::string>)
 {
-    std::clog << "Nts display command" << std::endl;
+    const auto &ntsShell = dynamic_cast<NtsShell &>(shell);
+
+    ntsShell.getCircuit()->compute(0);
     return true;
 }
 

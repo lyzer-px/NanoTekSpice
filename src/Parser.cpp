@@ -58,7 +58,8 @@ nts::Link::Link(const ChipsetName &chipset1Name, const std::string &chipset1Pin,
     this->component2.second = std::stoul(chipset2Pin);
 }
 
-nts::Parser::Parser(const std::string &filename) noexcept: _parsingComponentsSection{false},
+nts::Parser::Parser(const std::string &filename) noexcept:
+    _parsingComponentsSection{false},
     _parsingLinksSection{false}, _badExtention{false}
 {
     if (!filename.ends_with(".nts")) {
@@ -81,13 +82,13 @@ void nts::Parser::start()
         }
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-        if (line == KEYWORDS[0] && itt == 0) {
+        if (tokens[0] == KEYWORDS[0] && itt == 0) {
             this->_parsingComponentsSection = true;
             this->_parsingLinksSection      = false;
             itt++;
             continue;
         }
-        if (line == KEYWORDS[1] && itt != 0) {
+        if (tokens[0] == KEYWORDS[1] && itt != 0) {
             this->_parsingLinksSection      = true;
             this->_parsingComponentsSection = false;
             continue;
@@ -111,6 +112,17 @@ void nts::Parser::start()
     }
     if (this->_links.empty() || this->_chipsets.empty())
         throw ParserSyntaxException("Parser : Missing section");
+}
+
+std::vector<std::pair<nts::ChipsetType, nts::ChipsetName>>
+    nts::Parser::getChipsets() const noexcept
+{
+    return this->_chipsets;
+}
+
+std::vector<nts::Link> nts::Parser::getLinks() const noexcept
+{
+    return this->_links;
 }
 
 void nts::Parser::verifyLinkSyntax(const std::vector<std::string> &left,
@@ -141,14 +153,4 @@ bool nts::Parser::componentExists(const std::string &str)
             return true;
     }
     return false;
-}
-
-std::vector<std::pair<nts::ChipsetType, nts::ChipsetName>> nts::Parser::getChipsets() const noexcept
-{
-    return this->_chipsets;
-}
-
-std::vector<nts::Link> nts::Parser::getLinks() const noexcept
-{
-    return this->_links;
 }
