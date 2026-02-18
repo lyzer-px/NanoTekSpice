@@ -11,6 +11,7 @@ on:
 jobs:
   check_program_compilation:
     name: Check Compilation
+    if: github.repository != ${{ vars.MIRROR_URL }} || github.event.name == 'push'
     runs-on: ubuntu-latest
     container:  epitechcontent/epitest-docker
     timeout-minutes: 2
