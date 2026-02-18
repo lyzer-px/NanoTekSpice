@@ -69,13 +69,8 @@ void Circuit::setChipset(
         try {
             auto component = _factory.create(chipsetType, chipsetName);
 
-            if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
-                chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
-                _inputs.push_back(component.get());
-            }
-            if (chipsetType == OUTPUT_TYPE) {
-                _output.push_back(component.get());
-            }
+            saveIfInputOrOutput(chipsetType, component.get());
+
             _chipsets.push_back(std::move(component));
 
         } catch (const std::exception &e) {
@@ -111,8 +106,19 @@ void Circuit::linkChipsets(std::vector<Link> &&links)
             throw std::runtime_error("Unknown chipset");
         }
 
-        chipset1->get()->setLink(node1.second, *(chipset2->get()),
-            node2.second);
+        chipset1->get()->setLink(node1.second, **chipset2, node2.second);
+    }
+}
+
+void Circuit::saveIfInputOrOutput(const ChipsetType &chipsetType,
+    IComponent *chipset)
+{
+    if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
+        chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
+        _inputs.push_back(chipset);
+    }
+    if (chipsetType == OUTPUT_TYPE) {
+        _output.push_back(chipset);
     }
 }
 } // nts
