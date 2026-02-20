@@ -8,15 +8,16 @@
 #ifndef ANDGATE_HPP
 #define ANDGATE_HPP
 
+#include <memory>
 #include "AElementaryComponent.hpp"
+#include "components/IComponent.hpp"
 
 namespace nts {
 
-namespace Gates {
 class And : public AElementaryComponent {
 public:
-    explicit And() noexcept;
+    explicit And(std::string name);
+    static std::unique_ptr<IComponent> create(std::string name);
 };
-}
 }
 #endif

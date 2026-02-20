@@ -17,6 +17,7 @@ constexpr std::string OUTPUT_TYPE = "output";
 constexpr std::string TRUE_TYPE   = "true";
 constexpr std::string FALSE_TYPE  = "false";
 constexpr std::string CLOCK_TYPE  = "clock";
+constexpr std::string AND_TYPE  = "and";
 
 enum Tristate: std::uint8_t {
     FALSE     = 0U,

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <ranges>
 
+#include "components/IComponent.hpp"
 #include "components/special/Clock.hpp"
 #include "components/Circuit.hpp"
 #include "parser/Parser.hpp"
@@ -17,6 +18,8 @@
 #include "components/special/Input.hpp"
 #include "components/special/Output.hpp"
 #include "components/special/True.hpp"
+#include "components/elementary/And.hpp"
+
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}
@@ -26,6 +29,7 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<True>(TRUE_TYPE);
     _factory.registerCreator<False>(FALSE_TYPE);
     _factory.registerCreator<Clock>(CLOCK_TYPE);
+    _factory.registerCreator<And>(AND_TYPE);
 }
 
 void Circuit::simulate(const std::size_t &tick)
