@@ -29,9 +29,9 @@ Tristate AElementaryComponent::compute(const std::size_t &pin)
     Tristate input2 = Tristate::UNDEFINED;
 
     if (_pins[1].linkedComponent != nullptr)
-        input1 = _pins[1].linkedComponent->compute(1);
+        input1 = _pins[1].linkedComponent->compute(_pins[1].pin);
     if (_pins[2].linkedComponent != nullptr)
-        input2 = _pins[2].linkedComponent->compute(2);
+        input2 = _pins[2].linkedComponent->compute(_pins[2].pin);
 
     return _truthTable[input1][input2];
 }
