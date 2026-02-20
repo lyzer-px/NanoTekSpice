@@ -16,9 +16,6 @@ public:
     explicit ASpecialComponent(std::string name);
 
     Tristate compute(const std::size_t &pin) override;
-
-protected:
-    // Tristate _value;
 };
 } // nts
 
