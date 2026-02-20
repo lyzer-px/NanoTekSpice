@@ -8,6 +8,7 @@
 #ifndef NANOTEKSPICE_NTSSHELL_HPP
 #define NANOTEKSPICE_NTSSHELL_HPP
 
+#include "Circuit.hpp"
 #include "IComponent.hpp"
 #include "Shell.hpp"
 
@@ -16,14 +17,16 @@ class Circuit;
 
 class NtsShell: public shell::Shell {
 public:
-    NtsShell();
+    explicit NtsShell(Circuit *circuit);
 
-    void setCircuit(std::unique_ptr<IComponent> &circuit);
+    void setCircuit(Circuit *circuit);
 
-    IComponent *getCircuit() const noexcept;
+    Circuit *getCircuit() const noexcept;
+
+    bool executeCommand(const std::vector<std::string> &cmd) override;
 
 private:
-    std::unique_ptr<IComponent> _circuit;
+    Circuit *_circuit;
 };
 } // nts
 

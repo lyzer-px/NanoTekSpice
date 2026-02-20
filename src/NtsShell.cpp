@@ -10,24 +10,47 @@
 #include "NtsShell.hpp"
 #include "NtsDisplayCommand.hpp"
 #include "NtsLoopCommand.hpp"
+#include "NtsSetInputCommand.hpp"
 #include "NtsSimulateCommand.hpp"
 #include "ShellCommandNotFound.hpp"
+#include "ShellExitException.hpp"
 
 namespace nts {
-NtsShell::NtsShell(): Shell("nts_shell", "> ")
+NtsShell::NtsShell(Circuit *circuit): Shell("nts_shell", "> "),
+    _circuit(circuit)
 {
     _shellCommandFactory.registerCreator<NtsDisplayCommand>("display");
     _shellCommandFactory.registerCreator<NtsSimulateCommand>("simulate");
     _shellCommandFactory.registerCreator<NtsLoopCommand>("loop");
+    _shellCommandFactory.registerCreator<NtsSetInputCommand>("setInput");
 }
 
-void NtsShell::setCircuit(std::unique_ptr<IComponent> &circuit)
+void NtsShell::setCircuit(Circuit *circuit)
 {
-    _circuit = std::move(circuit);
+    _circuit = circuit;
 }
 
-IComponent * NtsShell::getCircuit() const noexcept
+Circuit *NtsShell::getCircuit() const noexcept
 {
-    return _circuit.get();
+    return _circuit;
+}
+
+bool NtsShell::executeCommand(const std::vector<std::string> &cmd)
+{
+    try {
+        return Shell::executeCommand(cmd);
+    }  catch (const shell::ShellExitException &) {
+        throw;
+    } catch (...) {
+        try {
+            const auto setCommand = _shellCommandFactory.create("setInput");
+
+            return (*setCommand)(*this, cmd);
+        } catch (const std::exception &) {
+            std::cerr << cmd[0] << ": command not found" << std::endl;
+
+            return false;
+        }
+    }
 }
 } // nts

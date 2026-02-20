@@ -9,13 +9,15 @@
 
 namespace nts {
 ASpecialComponent::ASpecialComponent(std::string name): AComponent(
-    std::move(name)), _value{UNDEFINED}
+    std::move(name))
 {
     _numberOfPin = 1;
+    _outputStates.reserve(1);
+    _outputStates[0] = Tristate::UNDEFINED;
 }
 
 Tristate ASpecialComponent::compute(const std::size_t &)
 {
-    return _value;
+    return _outputStates[0];
 }
 } // nts

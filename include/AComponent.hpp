@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "IComponent.hpp"
 
@@ -36,7 +37,11 @@ public:
     explicit AComponent(std::string name);
 
     void setLink(const std::size_t &pin, IComponent &other,
-        const std::size_t &otherPin) override;;
+        const std::size_t &otherPin) override;
+
+    static Tristate fromStringToTristate(const std::string & value);
+
+    static bool isTristate(const std::string & value);
 
     void simulate(const std::size_t &tick) override;
 
@@ -44,12 +49,15 @@ public:
 
     std::string getName() const noexcept override;
 
+    void setState(const Tristate &state) override;
+
 protected:
     std::string _type;
     std::string _name;
     std::size_t _numberOfPin;
     std::size_t _tick;
     std::pmr::unordered_map<std::size_t, Pin> _pins;
+    std::vector<Tristate> _outputStates;
 };
 } // nts
 

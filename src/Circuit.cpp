@@ -110,6 +110,24 @@ void Circuit::linkChipsets(std::vector<Link> &&links)
     }
 }
 
+void Circuit::setInput(const ChipsetName &chipsetName, const std::string &value)
+{
+    const auto temp = std::ranges::find_if(_chipsets,
+        [chipsetName](const std::unique_ptr<IComponent> &component) {
+            return component->getName() == chipsetName;
+        });
+
+    if (temp == _chipsets.end()) {
+        throw std::runtime_error("Unknown chipset: " + chipsetName);
+    }
+
+    try {
+        (*temp)->setState(fromStringToTristate(value));
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
+
 void Circuit::saveIfInputOrOutput(const ChipsetType &chipsetType,
     IComponent *chipset)
 {

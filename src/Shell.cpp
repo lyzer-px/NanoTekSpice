@@ -64,8 +64,7 @@ bool Shell::executeCommand(const std::vector<std::string> &cmd)
     } catch (const ShellExitException &) {
         throw;
     } catch (const std::exception &e) {
-        std::cerr << cmd[0] << ": command not found" << std::endl;
-        return false;
+        throw;
     }
 }
 

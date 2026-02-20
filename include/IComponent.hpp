@@ -35,6 +35,8 @@ public :
     virtual void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) = 0;
 
+    virtual void setState(const Tristate &state) = 0;
+
     virtual std::string getName() const noexcept = 0;
 };
 }
