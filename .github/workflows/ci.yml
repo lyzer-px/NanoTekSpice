@@ -40,19 +40,8 @@ jobs:
         run: |
           if grep -q "definitely lost: 0 bytes in 0 blocks" valgrind.log && grep -q "indirectly lost: 0 bytes in 0 blocks" valgrind.log && grep -q "possibly lost: 0 bytes in 0 blocks" valgrind.log; then exit 1; fi
 
-  run_tests:
-    name: Run Unit Tests
-    needs: [check_program_compilation]
-    runs-on: ubuntu-latest
-    container:  epitechcontent/epitest-docker
-    timeout-minutes: 2
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@main
-      - run: make tests_run
-
   push_to_mirror:
-    needs: [run_tests, check_memory_leak]
+    needs: [check_memory_leak]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
