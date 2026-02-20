@@ -12,7 +12,7 @@
 namespace nts {
 
 Or::Or(std::string name) : AElementaryComponent(std::move(name)) {
-        this->_type = AND_TYPE;
+        this->_type = OR_TYPE;
         this->_truthTable = {
             {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
             {Tristate::TRUE, Tristate::TRUE, Tristate::UNDEFINED},
