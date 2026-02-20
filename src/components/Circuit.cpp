@@ -21,6 +21,7 @@
 #include "components/elementary/And.hpp"
 #include "components/elementary/Or.hpp"
 #include "components/elementary/Nor.hpp"
+#include "components/elementary/Not.hpp"
 #include "components/elementary/Xor.hpp"
 #include "components/elementary/Xnor.hpp"
 #include "components/elementary/Nand.hpp"
@@ -39,6 +40,7 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<Or>(OR_TYPE);
     _factory.registerCreator<Xor>(XOR_TYPE);
     _factory.registerCreator<Xnor>(XNOR_TYPE);
+    _factory.registerCreator<Not>(NOT_TYPE);
 }
 
 void Circuit::simulate(const std::size_t &tick)
