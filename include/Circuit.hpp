@@ -29,15 +29,22 @@ public:
     void setLink(const std::size_t &pin, IComponent &other,
         const std::size_t &otherPin) override;
 
-    void setChipset(std::vector<std::pair<ChipsetType, ChipsetName>> &&chipsets);
+    void setChipset(
+        std::vector<std::pair<ChipsetType, ChipsetName>> &&chipsets);
 
     void linkChipsets(std::vector<Link> &&links);
+
+    void setInput(const ChipsetName &chipsetName, const std::string &value);
 
 private:
     std::vector<IComponent *> _inputs;
     std::vector<IComponent *> _output;
     std::vector<std::unique_ptr<IComponent>> _chipsets;
     ComponentFactory _factory;
+    std::vector<Tristate> _inputStates;
+
+    void saveIfInputOrOutput(const ChipsetType &chipsetType,
+        IComponent *chipset);
 };
 
 }

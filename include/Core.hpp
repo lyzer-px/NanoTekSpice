@@ -24,7 +24,7 @@ public:
     void run();
 private:
     Parser _parser;
-    NtsShell _shell;
+    std::unique_ptr<NtsShell> _shell;
     std::unique_ptr<IComponent> _circuit;
 };
 }

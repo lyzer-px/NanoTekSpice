@@ -5,20 +5,20 @@
 ** Clock
 */
 
-#include "Clock.hpp"
+#include "../include/Clock.hpp"
 
 namespace nts {
 Clock::Clock(std::string name): ASpecialComponent{std::move(name)}
 {
     _type    = CLOCK_TYPE;
-    _value   = Tristate::UNDEFINED;
     _pins[1] = Pin{PinType::OUTPUT, nullptr, 0};
 }
 
 void Clock::simulate(const std::size_t &tick)
 {
-    if (tick > _tick && _value != Tristate::UNDEFINED) {
-        _value = static_cast<Tristate>(!static_cast<bool>(_value));
+    if (tick > _tick && _outputStates[0] != Tristate::UNDEFINED) {
+        _outputStates[0] = static_cast<Tristate>(!static_cast<bool>(
+            _outputStates[0]));
     }
 
     _tick = tick;

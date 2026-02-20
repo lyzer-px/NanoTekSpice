@@ -11,7 +11,7 @@
 #include <iostream>
 #include <ranges>
 
-#include "Clock.hpp"
+#include "../include/Clock.hpp"
 #include "False.hpp"
 #include "Input.hpp"
 #include "Output.hpp"
@@ -32,7 +32,7 @@ void Circuit::simulate(const std::size_t &tick)
 {
     ++_tick;
 
-    for (const auto &chipset: _chipsets) {
+    for (const auto &chipset: _output) {
         chipset->simulate(tick);
     }
 }
@@ -69,13 +69,8 @@ void Circuit::setChipset(
         try {
             auto component = _factory.create(chipsetType, chipsetName);
 
-            if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
-                chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
-                _inputs.push_back(component.get());
-            }
-            if (chipsetType == OUTPUT_TYPE) {
-                _output.push_back(component.get());
-            }
+            saveIfInputOrOutput(chipsetType, component.get());
+
             _chipsets.push_back(std::move(component));
 
         } catch (const std::exception &e) {
@@ -111,8 +106,37 @@ void Circuit::linkChipsets(std::vector<Link> &&links)
             throw std::runtime_error("Unknown chipset");
         }
 
-        chipset1->get()->setLink(node1.second, *(chipset2->get()),
-            node2.second);
+        chipset1->get()->setLink(node1.second, **chipset2, node2.second);
+    }
+}
+
+void Circuit::setInput(const ChipsetName &chipsetName, const std::string &value)
+{
+    const auto temp = std::ranges::find_if(_chipsets,
+        [chipsetName](const std::unique_ptr<IComponent> &component) {
+            return component->getName() == chipsetName;
+        });
+
+    if (temp == _chipsets.end()) {
+        throw std::runtime_error("Unknown chipset: " + chipsetName);
+    }
+
+    try {
+        (*temp)->setState(fromStringToTristate(value));
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+void Circuit::saveIfInputOrOutput(const ChipsetType &chipsetType,
+    IComponent *chipset)
+{
+    if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
+        chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
+        _inputs.push_back(chipset);
+    }
+    if (chipsetType == OUTPUT_TYPE) {
+        _output.push_back(chipset);
     }
 }
 } // nts

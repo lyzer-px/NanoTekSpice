@@ -13,7 +13,10 @@
 
 nts::Core::Core(const std::string &filename) noexcept: _parser(filename),
     _circuit{std::make_unique<Circuit>("circuit")}
-{}
+{
+    _shell = std::make_unique<NtsShell>(
+        dynamic_cast<Circuit *>(this->_circuit.get()));
+}
 
 void nts::Core::run()
 {
@@ -24,8 +27,8 @@ void nts::Core::run()
         circuit->setChipset(this->_parser.getChipsets());
         circuit->linkChipsets(this->_parser.getLinks());
 
-        _shell.setCircuit(this->_circuit);
-        _shell.run();
+        _shell->setCircuit(circuit);
+        _shell->run();
 
     } catch (const std::exception &e) {
         throw;

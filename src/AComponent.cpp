@@ -8,6 +8,7 @@
 #include "../include/AComponent.hpp"
 
 #include <ostream>
+#include <ranges>
 #include <stdexcept>
 
 namespace nts {
@@ -42,9 +43,37 @@ void AComponent::setLink(const std::size_t &pin, IComponent &other,
     }
 }
 
+Tristate AComponent::fromStringToTristate(const std::string &value)
+{
+    if (value == "0")
+        return Tristate::FALSE;
+    if (value == "1")
+        return Tristate::TRUE;
+    if (value == "U")
+        return Tristate::UNDEFINED;
+    throw std::runtime_error("Unknown state value: " + value);
+}
+
+bool AComponent::isTristate(const std::string &value)
+{
+    switch (value[0]) {
+    case '0':
+    case '1':
+    case 'U':
+        return true;
+    default:
+        return false;
+    }
+}
+
 void AComponent::simulate(const std::size_t &tick)
 {
     _tick = tick;
+
+    for (const auto &pin: _pins | std::views::values) {
+        if (pin.type == PinType::INPUT)
+            pin.linkedComponent->simulate(tick);
+    }
 }
 
 PinType AComponent::getPinType(const std::size_t &pin,
@@ -58,6 +87,16 @@ PinType AComponent::getPinType(const std::size_t &pin,
 std::string AComponent::getName() const noexcept
 {
     return _name;
+}
+
+void AComponent::setState(const Tristate &state)
+{
+    if (_type == INPUT_TYPE || _type == CLOCK_TYPE) {
+        _outputStates[0] = state;
+        return;
+    }
+
+    throw std::runtime_error("Cannot set state for this component");
 }
 } // nts
 
