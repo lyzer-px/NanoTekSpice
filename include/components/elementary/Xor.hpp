@@ -5,8 +5,8 @@
 ** 
 */
 
-#ifndef ANDGATE_HPP
-#define ANDGATE_HPP
+#ifndef XORGATE_HPP
+#define XORGATE_HPP
 
 #include <memory>
 #include "AElementaryComponent.hpp"
