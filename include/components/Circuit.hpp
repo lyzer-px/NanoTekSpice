@@ -13,7 +13,7 @@
 
 #include "AComponent.hpp"
 #include "FactoryTemplate.hpp"
-#include "Parser.hpp"
+#include "parser/Parser.hpp"
 
 namespace nts {
 using ComponentFactory = FactoryTemplate<IComponent, ChipsetType, ChipsetName>;

@@ -5,11 +5,11 @@
 ** NtsDisplayCommand
 */
 
-#include "../include/NtsDisplayCommand.hpp"
 
 #include <iostream>
 
-#include "NtsShell.hpp"
+#include "commands/NtsDisplayCommand.hpp"
+#include "shell/NtsShell.hpp"
 
 namespace nts {
 bool NtsDisplayCommand::operator()(shell::Shell &shell,

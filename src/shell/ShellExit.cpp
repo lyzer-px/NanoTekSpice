@@ -5,8 +5,8 @@
 ** ShellExit
 */
 
-#include "ShellExit.hpp"
-#include "ShellExitException.hpp"
+#include "shell/ShellExit.hpp"
+#include "shell/ShellExitException.hpp"
 
 namespace shell {
 bool ShellExit::operator()(Shell &,

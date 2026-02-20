@@ -7,13 +7,13 @@
 
 #include <iostream>
 
-#include "NtsShell.hpp"
-#include "NtsDisplayCommand.hpp"
-#include "NtsLoopCommand.hpp"
-#include "NtsSetInputCommand.hpp"
-#include "NtsSimulateCommand.hpp"
-#include "ShellCommandNotFound.hpp"
-#include "ShellExitException.hpp"
+#include "commands/NtsDisplayCommand.hpp"
+#include "commands/NtsLoopCommand.hpp"
+#include "commands/NtsSetInputCommand.hpp"
+#include "commands/NtsSimulateCommand.hpp"
+#include "shell/NtsShell.hpp"
+#include "shell/ShellCommandNotFound.hpp"
+#include "shell/ShellExitException.hpp"
 
 namespace nts {
 NtsShell::NtsShell(Circuit *circuit): Shell("nts_shell", "> "),

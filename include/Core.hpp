@@ -10,10 +10,10 @@
 
 #include <memory>
 #include <string>
-#include "Parser.hpp"
-#include "NtsShell.hpp"
-#include "Circuit.hpp"
-#include "IComponent.hpp"
+#include "parser/Parser.hpp"
+#include "shell/NtsShell.hpp"
+#include "components/Circuit.hpp"
+#include "components/IComponent.hpp"
 
 namespace nts {
 class Core {

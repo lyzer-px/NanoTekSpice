@@ -5,18 +5,18 @@
 ** Circuit
 */
 
-#include "../include/Circuit.hpp"
 
 #include <algorithm>
 #include <iostream>
 #include <ranges>
 
-#include "../include/Clock.hpp"
-#include "False.hpp"
-#include "Input.hpp"
-#include "Output.hpp"
-#include "Parser.hpp"
-#include "True.hpp"
+#include "components/special/Clock.hpp"
+#include "components/Circuit.hpp"
+#include "parser/Parser.hpp"
+#include "components/special/False.hpp"
+#include "components/special/Input.hpp"
+#include "components/special/Output.hpp"
+#include "components/special/True.hpp"
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}

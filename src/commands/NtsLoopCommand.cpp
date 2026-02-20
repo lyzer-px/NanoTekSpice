@@ -5,9 +5,9 @@
 ** NtsLoopCommand
 */
 
-#include "../include/NtsLoopCommand.hpp"
+#include "commands/NtsLoopCommand.hpp"
+#include "shell/NtsShell.hpp"
 
-#include "NtsShell.hpp"
 
 namespace nts {
 bool NtsLoopCommand::operator()(shell::Shell &shell,

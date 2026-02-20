@@ -5,11 +5,11 @@
 ** NtsSetInputCommand
 */
 
-#include "../include/NtsSetInputCommand.hpp"
 
 #include <iostream>
 
-#include "NtsShell.hpp"
+#include "commands/NtsSetInputCommand.hpp"
+#include "shell/NtsShell.hpp"
 #include "StringUtils.hpp"
 
 namespace nts {

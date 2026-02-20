@@ -5,7 +5,7 @@
 ** ShellExitException
 */
 
-#include "../include/ShellExitException.hpp"
+#include "shell/ShellExitException.hpp"
 
 namespace shell {
 const char *ShellExitException::what() const noexcept

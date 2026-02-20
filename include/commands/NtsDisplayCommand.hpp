@@ -10,7 +10,7 @@
 
 #include <memory>
 
-#include "IShellCommand.hpp"
+#include "shell/IShellCommand.hpp"
 
 namespace nts {
 class NtsDisplayCommand: public shell::IShellCommand {

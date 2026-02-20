@@ -5,7 +5,7 @@
 ** AComponent
 */
 
-#include "../include/AComponent.hpp"
+#include "components/AComponent.hpp"
 
 #include <ostream>
 #include <ranges>

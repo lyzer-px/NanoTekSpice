@@ -5,7 +5,7 @@
 ** Output
 */
 
-#include "../include/Output.hpp"
+#include "components/special/Output.hpp"
 
 namespace nts {
 Output::Output(std::string name): ASpecialComponent(std::move(name))

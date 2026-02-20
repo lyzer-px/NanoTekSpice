@@ -5,7 +5,7 @@
 ** ASpecialComponent
 */
 
-#include "ASpecialComponent.hpp"
+#include "components/special/ASpecialComponent.hpp"
 
 namespace nts {
 ASpecialComponent::ASpecialComponent(std::string name): AComponent(

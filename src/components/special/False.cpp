@@ -5,7 +5,7 @@
 ** False
 */
 
-#include "../include/False.hpp"
+#include "components/special/False.hpp"
 
 namespace nts {
 False::False(std::string name): ASpecialComponent{std::move(name)}

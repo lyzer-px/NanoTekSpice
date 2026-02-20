@@ -5,7 +5,7 @@
 ** ShellCommandNotFound
 */
 
-#include "../include/ShellCommandNotFound.hpp"
+#include "shell/ShellCommandNotFound.hpp"
 
 namespace shell {
 const char *ShellCommandNotFound::what() const noexcept

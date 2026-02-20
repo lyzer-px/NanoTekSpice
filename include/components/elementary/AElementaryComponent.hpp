@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "AComponent.hpp"
+#include "../AComponent.hpp"
 
 namespace nts {
 class AElementaryComponent: public AComponent {

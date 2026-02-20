@@ -5,13 +5,13 @@
 ** Shell
 */
 
-#include "Shell.hpp"
 
 #include <iostream>
 
-#include "ShellCommandNotFound.hpp"
-#include "ShellExit.hpp"
-#include "ShellExitException.hpp"
+#include "shell/Shell.hpp"
+#include "shell/ShellCommandNotFound.hpp"
+#include "shell/ShellExit.hpp"
+#include "shell/ShellExitException.hpp"
 
 namespace shell {
 Shell::Shell(): _name{"default_shell"},

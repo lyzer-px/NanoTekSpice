@@ -5,7 +5,7 @@
 ** AElementaryComponent
 */
 
-#include "../include/AElementaryComponent.hpp"
+#include "components/elementary/AElementaryComponent.hpp"
 
 #include <stdexcept>
 

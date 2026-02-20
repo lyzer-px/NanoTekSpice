@@ -5,6 +5,6 @@
 ** 
 */
 
-#include "AElementaryComponent.hpp"
+#include "components/elementary/AElementaryComponent.hpp"
 
 

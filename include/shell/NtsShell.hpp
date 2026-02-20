@@ -8,9 +8,9 @@
 #ifndef NANOTEKSPICE_NTSSHELL_HPP
 #define NANOTEKSPICE_NTSSHELL_HPP
 
-#include "Circuit.hpp"
-#include "IComponent.hpp"
-#include "Shell.hpp"
+#include "components/Circuit.hpp"
+#include "components/IComponent.hpp"
+#include "shell/Shell.hpp"
 
 namespace nts {
 class Circuit;

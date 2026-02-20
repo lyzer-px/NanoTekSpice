@@ -5,7 +5,7 @@
 ** Input
 */
 
-#include "../include/Input.hpp"
+#include "components/special/Input.hpp"
 
 namespace nts {
 Input::Input(std::string name): ASpecialComponent{std::move(name)}

@@ -5,9 +5,9 @@
 ** NtsSimulateCommand
 */
 
-#include "NtsSimulateCommand.hpp"
+#include "commands/NtsSimulateCommand.hpp"
 
-#include "NtsShell.hpp"
+#include "shell/NtsShell.hpp"
 
 namespace nts {
 bool NtsSimulateCommand::operator()(shell::Shell &shell,
