@@ -6,7 +6,7 @@
 */
 
 #include "Core.hpp"
-#include "Circuit.hpp"
+#include "components/Circuit.hpp"
 #include <exception>
 #include <memory>
 #include <utility>
