@@ -19,6 +19,9 @@ Pin::Pin(const PinType &pinType, IComponent *component,
     const std::size_t &pinNumber): type{pinType}, linkedComponent{component},
     pin{pinNumber}
 {}
+Pin::Pin(const PinType &pinType): type{pinType}, linkedComponent{nullptr},
+    pin{0}
+{}
 
 AComponent::AComponent(std::string name): _name{std::move(name)},
     _numberOfPin{1}, _tick{0}
@@ -27,9 +30,8 @@ AComponent::AComponent(std::string name): _name{std::move(name)},
 void AComponent::setLink(const std::size_t &pin, IComponent &other,
     const std::size_t &otherPin)
 {
-    if (pin > _numberOfPin) {
+    if (pin > _numberOfPin || pin < 1)
         throw std::runtime_error("Bad pin number");
-    }
 
     if (_pins[pin].type == PinType::INPUT) {
         _pins[pin].linkedComponent = &other;
