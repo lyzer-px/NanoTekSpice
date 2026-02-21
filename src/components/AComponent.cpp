@@ -56,24 +56,12 @@ Tristate AComponent::fromStringToTristate(const std::string &value)
     throw std::runtime_error("Unknown state value: " + value);
 }
 
-bool AComponent::isTristate(const std::string &value)
-{
-    switch (value[0]) {
-    case '0':
-    case '1':
-    case 'U':
-        return true;
-    default:
-        return false;
-    }
-}
-
 void AComponent::simulate(const std::size_t &tick)
 {
     _tick = tick;
 
     for (const auto &pin: _pins | std::views::values) {
-        if (pin.type == PinType::INPUT)
+        if (pin.type == PinType::INPUT && pin.linkedComponent != nullptr)
             pin.linkedComponent->simulate(tick);
     }
 }

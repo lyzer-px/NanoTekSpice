@@ -44,8 +44,6 @@ public:
 
     static Tristate fromStringToTristate(const std::string & value);
 
-    static bool isTristate(const std::string & value);
-
     void simulate(const std::size_t &tick) override;
 
     static PinType getPinType(const std::size_t &pin, IComponent &component);
