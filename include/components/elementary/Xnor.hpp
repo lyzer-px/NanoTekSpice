@@ -5,8 +5,8 @@
 ** 
 */
 
-#ifndef ANDGATE_HPP
-#define ANDGATE_HPP
+#ifndef XNORGATE_HPP
+#define XNORGATE_HPP
 
 #include <memory>
 #include "AElementaryComponent.hpp"
@@ -14,10 +14,11 @@
 
 namespace nts {
 
-class And : public AElementaryComponent {
+class Xnor : public AElementaryComponent {
 public:
-    explicit And(std::string name);
+    explicit Xnor(std::string name);
     static std::unique_ptr<IComponent> create(std::string name);
 };
 }
 #endif
+

@@ -5,18 +5,27 @@
 ** Circuit
 */
 
+#include "components/Circuit.hpp"
 
 #include <algorithm>
 #include <iostream>
 #include <ranges>
 
+#include "components/composite/FourAnd.hpp"
+#include "components/elementary/And.hpp"
+#include "components/elementary/Nand.hpp"
+#include "components/elementary/Nor.hpp"
+#include "components/elementary/Not.hpp"
+#include "components/elementary/Or.hpp"
+#include "components/elementary/Xnor.hpp"
+#include "components/elementary/Xor.hpp"
+#include "components/IComponent.hpp"
 #include "components/special/Clock.hpp"
-#include "components/Circuit.hpp"
-#include "parser/Parser.hpp"
 #include "components/special/False.hpp"
 #include "components/special/Input.hpp"
 #include "components/special/Output.hpp"
 #include "components/special/True.hpp"
+#include "parser/Parser.hpp"
 
 namespace nts {
 Circuit::Circuit(std::string name): AComponent{std::move(name)}
@@ -26,6 +35,13 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<True>(TRUE_TYPE);
     _factory.registerCreator<False>(FALSE_TYPE);
     _factory.registerCreator<Clock>(CLOCK_TYPE);
+    _factory.registerCreator<And>(AND_TYPE);
+    _factory.registerCreator<Nand>(NAND_TYPE);
+    _factory.registerCreator<Or>(OR_TYPE);
+    _factory.registerCreator<Xor>(XOR_TYPE);
+    _factory.registerCreator<Xnor>(XNOR_TYPE);
+    _factory.registerCreator<Not>(NOT_TYPE);
+    _factory.registerCreator<FourAnd>(FOUR_AND_TYPE);
 }
 
 void Circuit::simulate(const std::size_t &tick)

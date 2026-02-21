@@ -5,8 +5,8 @@
 ** 
 */
 
-#ifndef ANDGATE_HPP
-#define ANDGATE_HPP
+#ifndef NANDGATE_HPP
+#define NANDGATE_HPP
 
 #include <memory>
 #include "AElementaryComponent.hpp"
@@ -14,9 +14,9 @@
 
 namespace nts {
 
-class And : public AElementaryComponent {
+class Nand : public AElementaryComponent {
 public:
-    explicit And(std::string name);
+    explicit Nand(std::string name);
     static std::unique_ptr<IComponent> create(std::string name);
 };
 }

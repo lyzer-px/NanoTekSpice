@@ -18,7 +18,8 @@
 namespace nts {
 enum class PinType: std::uint8_t {
     INPUT,
-    OUTPUT
+    OUTPUT,
+    POWER
 };
 
 struct Pin {
@@ -26,6 +27,8 @@ struct Pin {
 
     explicit Pin(const PinType &pinType, IComponent *component,
         const std::size_t &pinNumber);
+
+    explicit Pin(const PinType &pinType);
 
     PinType type;
     IComponent *linkedComponent;
@@ -56,7 +59,7 @@ protected:
     std::string _name;
     std::size_t _numberOfPin;
     std::size_t _tick;
-    std::pmr::unordered_map<std::size_t, Pin> _pins;
+    std::unordered_map<std::size_t, Pin> _pins;
     std::vector<Tristate> _outputStates;
 };
 } // nts

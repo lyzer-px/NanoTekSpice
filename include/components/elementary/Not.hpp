@@ -5,8 +5,8 @@
 ** 
 */
 
-#ifndef ANDGATE_HPP
-#define ANDGATE_HPP
+#ifndef NOTGATE_HPP
+#define NOTGATE_HPP
 
 #include <memory>
 #include "AElementaryComponent.hpp"
@@ -14,10 +14,14 @@
 
 namespace nts {
 
-class And : public AElementaryComponent {
+class Not : public AElementaryComponent {
 public:
-    explicit And(std::string name);
+    explicit Not(std::string name);
     static std::unique_ptr<IComponent> create(std::string name);
+    Tristate compute(const std::size_t &pin) override;
+private:
+    std::vector<Tristate> _truthTable;
 };
 }
 #endif
+
