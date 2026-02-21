@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** OOP
 ** File description:
-** 
+**
 */
 
 #ifndef ICOMPONENT_HPP
@@ -29,7 +29,8 @@ constexpr std::string FOUR_AND_TYPE  = "4081";
 enum Tristate: std::uint8_t {
     FALSE     = 0U,
     TRUE      = 1U,
-    UNDEFINED = 2U
+    UNDEFINED = 2U,
+    ERROR
 };
 
 class IComponent {
