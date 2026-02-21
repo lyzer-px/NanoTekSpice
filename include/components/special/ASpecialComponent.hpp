@@ -16,6 +16,13 @@ public:
     explicit ASpecialComponent(std::string name);
 
     Tristate compute(const std::size_t &pin) override;
+
+    void setState(const Tristate &state) override;
+
+    void simulate(const std::size_t &tick) override;
+
+protected:
+    Tristate _setState = Tristate::ERROR;
 };
 } // nts
 
