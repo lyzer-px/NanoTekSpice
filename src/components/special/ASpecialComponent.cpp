@@ -7,9 +7,11 @@
 
 #include "components/special/ASpecialComponent.hpp"
 
+#include <stdexcept>
+
 namespace nts {
-ASpecialComponent::ASpecialComponent(std::string name): AComponent(
-    std::move(name))
+ASpecialComponent::ASpecialComponent(std::string name):
+    AComponent(std::move(name))
 {
     _numberOfPin = 1;
     _outputStates.reserve(1);
@@ -20,4 +22,24 @@ Tristate ASpecialComponent::compute(const std::size_t &)
 {
     return _outputStates[0];
 }
-} // nts
+
+void ASpecialComponent::setState(const Tristate &state)
+{
+    if (_type == INPUT_TYPE || _type == CLOCK_TYPE) {
+        _setState = state;
+        return;
+    }
+
+    throw std::runtime_error("Cannot set state for this component");
+}
+
+void ASpecialComponent::simulate(const std::size_t &tick)
+{
+    if (_setState != Tristate::ERROR) {
+        _outputStates[0] = _setState;
+        _setState        = Tristate::ERROR;
+    }
+
+    AComponent::simulate(tick);
+}
+} // namespace nts

@@ -8,6 +8,7 @@
 #ifndef NANOTEKSPICE_CIRCUIT_HPP
 #define NANOTEKSPICE_CIRCUIT_HPP
 
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -32,19 +33,20 @@ public:
     void setChipset(
         std::vector<std::pair<ChipsetType, ChipsetName>> &&chipsets);
 
+    void init();
     void linkChipsets(std::vector<Link> &&links);
 
     void setInput(const ChipsetName &chipsetName, const std::string &value);
 
 private:
-    std::vector<IComponent *> _inputs;
-    std::vector<IComponent *> _output;
+    std::map<ChipsetName, std::pair<IComponent *, Tristate>> _inputs;
+    std::map<ChipsetName, std::pair<IComponent *, Tristate>> _output;
     std::vector<std::unique_ptr<IComponent>> _chipsets;
     ComponentFactory _factory;
     std::vector<Tristate> _inputStates;
 
     void saveIfInputOrOutput(const ChipsetType &chipsetType,
-        IComponent *chipset);
+        const ChipsetName &chipsetName, IComponent *chipset);
 };
 
 }

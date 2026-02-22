@@ -16,16 +16,12 @@ namespace nts {
 bool NtsSetInputCommand::operator()(shell::Shell &shell,
     std::vector<std::string> cmd)
 {
-    if (cmd.size() != 1) {
-        std::cerr << "Bad formated set command" << std::endl;
-        return false;
-    }
+    if (cmd.size() != 1)
+        throw std::logic_error("Bad command");
 
     const auto splited = strutils::splitStr(cmd[0], '=');
-    if (splited.size() != 2) {
-        std::cerr << "Bad formated set command" << std::endl;
-        return false;
-    }
+    if (splited.size() != 2)
+        throw std::logic_error("Bad command");
 
     const auto &ntsShell = dynamic_cast<NtsShell &>(shell);
 
