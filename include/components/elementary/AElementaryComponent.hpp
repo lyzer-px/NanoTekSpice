@@ -19,8 +19,12 @@ public:
     
     Tristate compute(const std::size_t &pin) override;
 
+    void simulate(const std::size_t &pin) override;
+
 protected:
     std::vector<std::vector<Tristate>> _truthTable;
+    bool _isComputing = false;
+    bool _isSimulating = false;
 };
 } // nts
 
