@@ -11,7 +11,7 @@ namespace nts {
 Clock::Clock(std::string name): ASpecialComponent{std::move(name)}
 {
     _type    = CLOCK_TYPE;
-    _pins[1] = Pin{PinType::OUTPUT, nullptr, 0};
+    _pins[1] = Pin{PinType::OUTPUT};
 }
 
 void Clock::simulate(const std::size_t &tick)

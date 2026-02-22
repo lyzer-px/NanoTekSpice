@@ -19,7 +19,7 @@
 
 #include "StringUtils.hpp"
 
-constexpr std::size_t NUMBER_OF_KEYWORDS                  = 26;
+constexpr std::size_t NUMBER_OF_KEYWORDS                  = 27;
 const std::array<nts::Token, NUMBER_OF_KEYWORDS> KEYWORDS = {
     ".chipsets:",
     ".links:",
@@ -31,6 +31,7 @@ const std::array<nts::Token, NUMBER_OF_KEYWORDS> KEYWORDS = {
     "or",
     "xor",
     "not",
+    "nand",
     "4001",
     "4011",
     "4030",
