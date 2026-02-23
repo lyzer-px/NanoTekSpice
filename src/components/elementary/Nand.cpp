@@ -14,9 +14,9 @@ namespace nts {
 Nand::Nand(std::string name) : AElementaryComponent(std::move(name)) {
         this->_type = NAND_TYPE;
         this->_truthTable = {
+            {Tristate::TRUE, Tristate::TRUE, Tristate::TRUE},
             {Tristate::TRUE, Tristate::FALSE, Tristate::UNDEFINED},
-            {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
-            {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
+            {Tristate::TRUE, Tristate::UNDEFINED, Tristate::UNDEFINED},
         };
     }
 
