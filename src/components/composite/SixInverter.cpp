@@ -7,7 +7,7 @@
 
 #include "components/composite/SixInverter.hpp"
 
-#include "components/elementary/Nand.hpp"
+#include "components/elementary/Not.hpp"
 
 namespace nts {
 SixInverter::SixInverter(std::string name): ACompositeComponent{std::move(name)}
@@ -16,7 +16,7 @@ SixInverter::SixInverter(std::string name): ACompositeComponent{std::move(name)}
 
     for (std::size_t i = 0; i < 6; ++i)
         _components.push_back(
-            std::make_unique<Nand>("nand_" + std::to_string(i + 1)));
+            std::make_unique<Not>("not_" + std::to_string(i + 1)));
 
     ACompositeComponent::registerInternComponentsPins();
 
