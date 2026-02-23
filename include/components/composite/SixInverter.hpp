@@ -16,6 +16,8 @@ public:
     explicit SixInverter(std::string name);
 
     static std::unique_ptr<IComponent> create(std::string name);
+    void registerInternComponentsPins() override;
+    void setPinsType() override;
 };
 
 } // namespace nts
