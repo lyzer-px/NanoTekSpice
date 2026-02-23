@@ -11,7 +11,7 @@ on:
 jobs:
   check_program_compilation:
     name: Check Compilation
-    if: ${{ github.event.repository.name != vars.USERNAME }}
+    if: ${{ github.event.repository.name == vars.USERNAME }}
     runs-on: ubuntu-latest
     container:  epitechcontent/epitest-docker
     timeout-minutes: 5
@@ -26,7 +26,7 @@ jobs:
 
   check_memory_leak:
     name: Check Memory Leak
-    if: ${{ github.repository_owner != vars.USERNAME }}
+    if: ${{ github.repository_owner == vars.USERNAME }}
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     needs: [check_program_compilation]
@@ -43,7 +43,7 @@ jobs:
 
   push_to_mirror:
     needs: [check_memory_leak]
-    if: ${{ github.event.repository.name != vars.USERNAME }}
+    if: ${{ github.event.repository.name == vars.USERNAME }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
