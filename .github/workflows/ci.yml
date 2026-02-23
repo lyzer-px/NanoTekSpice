@@ -26,6 +26,7 @@ jobs:
 
   check_memory_leak:
     name: Check Memory Leak
+    if: ${{ github.event.repository.name != vars.MIRROR_URL }}
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     needs: [check_program_compilation]
@@ -42,6 +43,7 @@ jobs:
 
   push_to_mirror:
     needs: [check_memory_leak]
+    if: ${{ github.event.repository.name != vars.MIRROR_URL }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
