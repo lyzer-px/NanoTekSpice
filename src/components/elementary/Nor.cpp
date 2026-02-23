@@ -14,7 +14,7 @@ namespace nts {
 Nor::Nor(std::string name) : AElementaryComponent(std::move(name)) {
         this->_type = NOR_TYPE;
         this->_truthTable = {
-            {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
+            {Tristate::FALSE, Tristate::FALSE, Tristate::UNDEFINED},
             {Tristate::TRUE, Tristate::TRUE, Tristate::UNDEFINED},
             {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
         };
