@@ -5,9 +5,9 @@
 ** FourAnd
 */
 
-#include "../../../include/components/composite/FourAnd.hpp"
+#include "components/composite/FourAnd.hpp"
 
-#include "../../../include/components/elementary/And.hpp"
+#include "components/elementary/And.hpp"
 
 namespace nts {
 FourAnd::FourAnd(std::string name): ACompositeComponent{std::move(name)}
