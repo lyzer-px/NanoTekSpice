@@ -17,7 +17,7 @@ FourNor::FourNor(std::string name): ACompositeComponent{std::move(name)}
 
     for (std::size_t i = 0; i < 4; ++i)
         _components.push_back(
-            std::make_unique<Nor>("or_" + std::to_string(i + 1)));
+            std::make_unique<Nor>("nor_" + std::to_string(i + 1)));
 
     ACompositeComponent::registerInternComponentsPins();
 

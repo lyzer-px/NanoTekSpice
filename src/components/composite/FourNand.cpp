@@ -12,11 +12,11 @@
 namespace nts {
 FourNand::FourNand(std::string name): ACompositeComponent{std::move(name)}
 {
-    _type = FOUR_AND_TYPE;
+    _type = FOUR_NAND_TYPE;
 
     for (std::size_t i = 0; i < 4; ++i)
         _components.push_back(
-            std::make_unique<Nand>("and_" + std::to_string(i + 1)));
+            std::make_unique<Nand>("nand_" + std::to_string(i + 1)));
 
     ACompositeComponent::registerInternComponentsPins();
 
