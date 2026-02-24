@@ -20,7 +20,7 @@
 #include "StringUtils.hpp"
 
 constexpr std::size_t NUMBER_OF_KEYWORDS                  = 27;
-const std::array<nts::Token, NUMBER_OF_KEYWORDS> KEYWORDS = {
+constexpr std::array<nts::Token, NUMBER_OF_KEYWORDS> KEYWORDS = {
     ".chipsets:",
     ".links:",
     "input",
