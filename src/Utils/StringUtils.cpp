@@ -21,6 +21,9 @@ std::string StringUtils::cleanString(const std::string &str) noexcept
 
     std::getline(stream, remaining);
 
+    if (remaining.back() == '\r')
+        remaining.pop_back();
+
     return word + remaining;
 }
 
@@ -36,7 +39,20 @@ std::vector<std::string> StringUtils::split(const std::string &str) noexcept
     return result;
 }
 
-std::string StringUtils::spaces(std::size_t size) noexcept
+std::vector<std::string> StringUtils::split(const std::string &str,
+    const char &delim)
+{
+    std::vector<std::string> result;
+    std::stringstream stream{str};
+    std::string word;
+
+    while (std::getline(stream, word, delim))
+        result.push_back(word);
+
+    return result;
+}
+
+std::string StringUtils::spaces(const std::size_t size) noexcept
 {
     std::string result;
 

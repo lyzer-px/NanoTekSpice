@@ -17,6 +17,9 @@ public:
 
     static std::vector<std::string> split(const std::string &str) noexcept;
 
+    static std::vector<std::string> split(const std::string &str,
+        const char &delim);
+
     static std::string spaces(std::size_t size) noexcept;
 
     static std::string fillChars(std::size_t size, char character) noexcept;
