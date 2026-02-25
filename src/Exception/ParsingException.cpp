@@ -18,8 +18,8 @@ ParsingException::ParsingException(const std::string &filename,
     const std::string &line, const std::size_t &lineNumber):
     _filename{filename}, _line{line}, _lineNumber{lineNumber}
 {
-    if (_line[line.size() - 1] == '\r')
-        _line.erase(line.size() - 1);
+    if (_line.back() == '\r')
+        _line.pop_back();
 }
 
 const char *ParsingException::what() const noexcept
