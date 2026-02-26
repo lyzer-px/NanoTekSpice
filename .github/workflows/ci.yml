@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@main
       - name: Build binary
         run: make re
-      - name: Run Valgrind on wolf3d
+      - name: Run Valgrind
         run: valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 ./wolf3d 2> valgrind.log || true
       - name: Check Memory Leak in Log File
         run: |
