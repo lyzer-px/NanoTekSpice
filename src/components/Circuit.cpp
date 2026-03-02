@@ -100,6 +100,7 @@ void Circuit::setChipset(
         }
     }
 }
+
 void Circuit::init()
 {
     for (auto &node: _inputs | std::views::values) {

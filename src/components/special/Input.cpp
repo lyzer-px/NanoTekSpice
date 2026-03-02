@@ -11,7 +11,7 @@ namespace nts {
 Input::Input(std::string name): ASpecialComponent{std::move(name)}
 {
     _type    = INPUT_TYPE;
-    _pins[1] = Pin{PinType::OUTPUT, nullptr, 0};
+    _pins[1] = Pin{PinType::OUTPUT};
 }
 
 std::unique_ptr<IComponent> Input::create(std::string name)

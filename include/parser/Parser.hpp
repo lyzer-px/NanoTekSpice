@@ -17,21 +17,9 @@
 #include <utility>
 #include <vector>
 
+#include "types.hpp"
+
 namespace nts {
-
-using ChipsetName = std::string;
-using ChipsetType = std::string;
-using PinNumber   = std::size_t;
-using Token       = std::string;
-
-struct Link {
-    Link(const ChipsetName &chipset1Name, const std::string &chipset1Pin,
-        const ChipsetName &chipset2Name, const std::string &chipset2Pin);
-
-    std::pair<ChipsetName, PinNumber> component1;
-    std::pair<ChipsetName, PinNumber> component2;
-};
-
 class Parser {
 public:
     explicit Parser(const std::string &filename) noexcept;

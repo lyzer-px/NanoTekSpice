@@ -14,7 +14,7 @@ True::True(std::string name): ASpecialComponent{std::move(name)}
 {
     _type            = TRUE_TYPE;
     _outputStates[0] = Tristate::TRUE;
-    _pins[1]         = Pin{PinType::OUTPUT, nullptr, 0};
+    _pins[1]         = Pin{PinType::OUTPUT};
 }
 
 std::unique_ptr<IComponent> True::create(std::string name)
