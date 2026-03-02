@@ -12,6 +12,11 @@
 #include <ranges>
 
 #include "components/composite/FourAnd.hpp"
+#include "components/composite/FourNand.hpp"
+#include "components/composite/FourOr.hpp"
+#include "components/composite/FourNor.hpp"
+#include "components/composite/FourXor.hpp"
+#include "components/composite/SixInverter.hpp"
 #include "components/elementary/And.hpp"
 #include "components/elementary/Nand.hpp"
 #include "components/elementary/Nor.hpp"
@@ -35,13 +40,20 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<True>(TRUE_TYPE);
     _factory.registerCreator<False>(FALSE_TYPE);
     _factory.registerCreator<Clock>(CLOCK_TYPE);
+
     _factory.registerCreator<And>(AND_TYPE);
     _factory.registerCreator<Nand>(NAND_TYPE);
     _factory.registerCreator<Or>(OR_TYPE);
     _factory.registerCreator<Xor>(XOR_TYPE);
     _factory.registerCreator<Xnor>(XNOR_TYPE);
     _factory.registerCreator<Not>(NOT_TYPE);
+
     _factory.registerCreator<FourAnd>(FOUR_AND_TYPE);
+    _factory.registerCreator<FourNand>(FOUR_NAND_TYPE);
+    _factory.registerCreator<FourOr>(FOUR_OR_TYPE);
+    _factory.registerCreator<FourNor>(FOUR_NOR_TYPE);
+    _factory.registerCreator<FourXor>(FOUR_XOR_TYPE);
+    _factory.registerCreator<SixInverter>(SIX_INVERTER_TYPE);
 }
 
 void Circuit::simulate(const std::size_t &tick)
