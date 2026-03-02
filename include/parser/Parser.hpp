@@ -29,7 +29,10 @@ public:
     ~Parser() noexcept = default;
 
     void start();
-
+    void parse();
+    bool toggleParsingSections(std::vector<std::string> tokens, size_t &index);
+    bool pushToChipsets(std::vector<std::string> tokens);
+    void pushToLinks(std::vector<std::string> tokens);
     std::vector<std::pair<ChipsetType, ChipsetName>>
         getChipsets() const noexcept;
 
@@ -73,12 +76,15 @@ private:
 
     bool componentExists(const std::string &str);
 
-    std::vector<std::pair<ChipsetType, ChipsetName>> _chipsets;
-    std::vector<Link> _links;
     std::ifstream _stream;
+    std::string _filename;
+    bool _badExtention;
     bool _parsingComponentsSection;
     bool _parsingLinksSection;
-    bool _badExtention;
+    std::size_t _currentLineIndex = 0;
+    std::string _currentLine;
+    std::vector<std::pair<ChipsetType, ChipsetName>> _chipsets;
+    std::vector<Link> _links;
 };
 
 }

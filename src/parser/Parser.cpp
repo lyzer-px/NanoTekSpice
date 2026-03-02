@@ -14,13 +14,21 @@
 #include <iterator>
 #include <ranges>
 #include <regex>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
+#include "Exception/BadFileExtensionException.hpp"
+#include "Exception/ParsingException.hpp"
+#include "Exception/UnknownChipsetType.hpp"
+#include "Exception/LinkSyntaxError.hpp"
+#include "Exception/ChipsetAlreadyDefinedError.hpp"
+#include "Exception/FileNotFoundException.hpp"
+#include "Exception/ChipsetArgumentError.hpp"
+#include "Exception/NoChipsetError.hpp"
 #include "StringUtils.hpp"
 
-constexpr std::size_t NUMBER_OF_KEYWORDS                  = 28;
-const std::array<nts::Token, NUMBER_OF_KEYWORDS> KEYWORDS = {
+const std::vector<nts::Token> KEYWORDS = {
     ".chipsets:",
     ".links:",
     "input",
@@ -60,8 +68,9 @@ nts::Link::Link(const ChipsetName &chipset1Name, const std::string &chipset1Pin,
 }
 
 nts::Parser::Parser(const std::string &filename) noexcept:
+     _filename{filename}, _badExtention{false},
     _parsingComponentsSection{false},
-    _parsingLinksSection{false}, _badExtention{false}
+    _parsingLinksSection{false}
 {
     if (!filename.ends_with(".nts")) {
         this->_badExtention = true;
@@ -70,49 +79,81 @@ nts::Parser::Parser(const std::string &filename) noexcept:
     this->_stream = std::ifstream(filename);
 }
 
-void nts::Parser::start()
+
+bool nts::Parser::toggleParsingSections(std::vector<std::string> tokens, size_t &index)
+{
+    if (tokens[0] == KEYWORDS[0] && index == 0) {
+        this->_parsingComponentsSection = true;
+        this->_parsingLinksSection      = false;
+        index++;
+        return true;
+    }
+    if (tokens[0] == KEYWORDS[1] && index != 0) {
+        this->_parsingLinksSection      = true;
+        this->_parsingComponentsSection = false;
+        return true;
+    }
+    return false;
+}
+
+bool nts::Parser::pushToChipsets(std::vector<std::string> tokens)
+{
+    if (this->_parsingComponentsSection && !this->_parsingLinksSection) {
+        verifyChipsetSyntax(tokens);
+        if (this->componentExists(tokens.at(0)))
+            throw error::ChipsetAlreadyDefinedError(this->_filename, this->_currentLine,
+                                                    this->_currentLineIndex);
+        this->_chipsets.emplace_back(tokens.at(0), tokens.at(1));
+        return true;
+    }
+    return false;
+}
+
+void nts::Parser::pushToLinks(std::vector<std::string> tokens)
+{
+    if (this->_parsingLinksSection && !this->_parsingComponentsSection) {
+        std::vector<std::string> left =
+            strutils::splitStr(tokens.at(0), ':');
+        std::vector<std::string> right = strutils::splitStr(tokens.at(1),
+            ':');
+        verifyLinkSyntax(left, right);
+        this->_links.emplace_back(left.at(0), left.at(1), right.at(0),
+            right.at(1));
+    }
+}
+
+void nts::Parser::parse()
 {
     std::string line;
-    std::size_t itt = 0;
+    std::size_t index = 0;
 
-    if (this->_stream.fail() || this->_badExtention)
-        throw ParserFileException("Parser : Invalid file");
     while (std::getline(this->_stream, line)) {
+        this->_currentLineIndex++;
+        this->_currentLine = line;
         if (line[0] == '#') {
             continue;
         }
         strutils::sanitize(line);
         std::vector<std::string> tokens = strutils::splitStr(line, ' ');
-        if (tokens[0] == KEYWORDS[0] && itt == 0) {
-            this->_parsingComponentsSection = true;
-            this->_parsingLinksSection      = false;
-            itt++;
+        if (this->toggleParsingSections(tokens, index))
             continue;
-        }
-        if (tokens[0] == KEYWORDS[1] && itt != 0) {
-            this->_parsingLinksSection      = true;
-            this->_parsingComponentsSection = false;
+        if (this->pushToChipsets(tokens))
             continue;
-        }
-        if (this->_parsingComponentsSection && !this->_parsingLinksSection) {
-            verifyChipsetSyntax(tokens);
-            // @todo: use @c{std::vector::emplace_back} instead
-            this->_chipsets.push_back(std::pair(tokens.at(0), tokens.at(1)));
-            continue;
-        }
-        if (this->_parsingLinksSection && !this->_parsingComponentsSection) {
-            std::vector<std::string> left =
-                strutils::splitStr(tokens.at(0), ':');
-            std::vector<std::string> right = strutils::splitStr(tokens.at(1),
-                ':');
-            verifyLinkSyntax(left, right);
-            // @todo: use @c{std::vector::emplace_back} instead
-            this->_links.push_back(Link(left.at(0), left.at(1), right.at(0),
-                right.at(1)));
-        }
+        this->pushToLinks(tokens);
     }
-    if (this->_links.empty() || this->_chipsets.empty())
-        throw ParserSyntaxException("Parser : Missing section");
+   }
+
+void nts::Parser::start()
+{
+    if (this->_stream.fail())
+        throw error::FileNotFoundException();
+    if (this->_badExtention)
+        throw error::BadFileExtensionException();
+    this->parse();
+    if (this->_chipsets.empty())
+        throw ParserSyntaxException("Parser: Missing chipsets section");
+    if (this->_links.empty())
+        throw ParserSyntaxException("Parser: Missing links section");
 }
 
 std::vector<std::pair<nts::ChipsetType, nts::ChipsetName>>
@@ -133,7 +174,8 @@ void nts::Parser::verifyLinkSyntax(const std::vector<std::string> &left,
         throw ParserSyntaxException("Parser : Invalid token amount");
     if (this->componentExists(left.at(0)) && this->componentExists(right.at(0)))
         return;
-    throw ParserSyntaxException("Parser: Invalid chipset to link");
+    throw error::LinkSyntaxError(this->_filename,
+                                 this->_currentLine, this->_currentLineIndex);
 }
 
 void nts::Parser::verifyChipsetSyntax(const std::vector<std::string> &tokens)
@@ -144,7 +186,8 @@ void nts::Parser::verifyChipsetSyntax(const std::vector<std::string> &tokens)
         if (tokens.at(0) == keyword)
             return;
     }
-    throw ParserSyntaxException("Parser : Invalid component");
+    throw error::UnknownChipsetType(this->_filename, this->_currentLine,
+                                    this->_currentLineIndex);
 }
 
 bool nts::Parser::componentExists(const std::string &str)
