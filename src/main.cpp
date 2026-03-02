@@ -6,6 +6,7 @@
 */
 
 #include "Core.hpp"
+#include "Exception/ParsingException.hpp"
 #include <iostream>
 
 int main(const int argc, char **argv)
@@ -18,6 +19,9 @@ int main(const int argc, char **argv)
         nts::Core core(argv[1]);
 
         core.run();
+    } catch (nts::error::ParsingException &p) {
+        p.description();
+        return 84;
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
         return 84;
