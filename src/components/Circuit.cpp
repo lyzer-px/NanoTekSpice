@@ -25,6 +25,7 @@
 #include "components/elementary/Xnor.hpp"
 #include "components/elementary/Xor.hpp"
 #include "components/IComponent.hpp"
+#include "components/composite/FullBitAdder.hpp"
 #include "components/special/Clock.hpp"
 #include "components/special/False.hpp"
 #include "components/special/Input.hpp"
@@ -54,6 +55,7 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<FourNor>(FOUR_NOR_TYPE);
     _factory.registerCreator<FourXor>(FOUR_XOR_TYPE);
     _factory.registerCreator<SixInverter>(SIX_INVERTER_TYPE);
+    _factory.registerCreator<FullBitAdder>(FULL_ADDER_TYPE);
 }
 
 void Circuit::simulate(const std::size_t &tick)
