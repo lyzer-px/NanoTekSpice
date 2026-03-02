@@ -15,8 +15,8 @@ Or::Or(std::string name) : AElementaryComponent(std::move(name)) {
         this->_type = OR_TYPE;
         this->_truthTable = {
             {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
-            {Tristate::TRUE, Tristate::TRUE, Tristate::UNDEFINED},
-            {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
+            {Tristate::TRUE, Tristate::TRUE, Tristate::TRUE},
+            {Tristate::UNDEFINED, Tristate::TRUE, Tristate::UNDEFINED},
         };
     }
 
