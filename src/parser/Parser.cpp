@@ -19,11 +19,13 @@
 #include <vector>
 
 #include "Exception/BadFileExtensionException.hpp"
+#include "Exception/ParsingException.hpp"
 #include "Exception/UnknownChipsetType.hpp"
 #include "Exception/LinkSyntaxError.hpp"
 #include "Exception/ChipsetAlreadyDefinedError.hpp"
 #include "Exception/FileNotFoundException.hpp"
 #include "Exception/ChipsetArgumentError.hpp"
+#include "Exception/NoChipsetError.hpp"
 #include "StringUtils.hpp"
 
 const std::vector<nts::Token> KEYWORDS = {
@@ -141,7 +143,7 @@ void nts::Parser::parse()
             continue;
         this->pushToLinks(tokens);
     }
-}
+   }
 
 void nts::Parser::start()
 {
@@ -150,8 +152,10 @@ void nts::Parser::start()
     if (this->_badExtention)
         throw error::BadFileExtensionException();
     this->parse();
-    if (this->_links.empty() || this->_chipsets.empty())
-        throw ParserSyntaxException("Parser : Missing section");
+    if (this->_chipsets.empty())
+        throw ParserSyntaxException("Parser: Missing chipsets section");
+    if (this->_links.empty())
+        throw ParserSyntaxException("Parser: Missing links section");
 }
 
 std::vector<std::pair<nts::ChipsetType, nts::ChipsetName>>
@@ -194,6 +198,5 @@ bool nts::Parser::componentExists(const std::string &str)
         if (chipsetName == str)
             return true;
     }
-    throw error::ChipsetArgumentError(false, this->_filename, this->_currentLine,
-                                      this->_currentLineIndex);
+    return false;
 }
