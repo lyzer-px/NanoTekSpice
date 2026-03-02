@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "IComponent.hpp"
+#include "parser/types.hpp"
 
 namespace nts {
 enum class PinType: std::uint8_t {
@@ -29,6 +30,8 @@ struct Pin {
         const std::size_t &pinNumber);
 
     explicit Pin(const PinType &pinType);
+
+    void setLink(const PinNumber &componentPin, IComponent *component);
 
     PinType type;
     IComponent *linkedComponent;

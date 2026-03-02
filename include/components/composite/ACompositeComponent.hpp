@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "../../../include/components/AComponent.hpp"
+#include "parser/types.hpp"
 
 namespace nts {
 class IComponent;
@@ -30,8 +31,8 @@ public:
 
 protected:
     std::vector<std::unique_ptr<IComponent>> _components;
-    std::unordered_map<std::size_t, std::pair<IComponent *, std::size_t>>
-    _inputPins;
+    std::unordered_map<PinNumber, std::vector<std::pair<IComponent *,
+        PinNumber>>> _internalPins;
 };
 
 } // namespace nts
