@@ -15,10 +15,10 @@ Xor::Xor(std::string name) : AElementaryComponent(std::move(name)) {
         this->_type = XOR_TYPE;
         this->_truthTable = {
             {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
-            {Tristate::TRUE, Tristate::FALSE, Tristate::TRUE},
-            {Tristate::UNDEFINED, Tristate::TRUE, Tristate::UNDEFINED},
+            {Tristate::TRUE, Tristate::FALSE, Tristate::UNDEFINED},
+            {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
         };
-    }
+}
 
 std::unique_ptr<IComponent> Xor::create(std::string name)
 {
