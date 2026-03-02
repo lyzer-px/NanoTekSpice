@@ -18,7 +18,7 @@ Xor::Xor(std::string name) : AElementaryComponent(std::move(name)) {
             {Tristate::TRUE, Tristate::FALSE, Tristate::UNDEFINED},
             {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
         };
-    }
+}
 
 std::unique_ptr<IComponent> Xor::create(std::string name)
 {

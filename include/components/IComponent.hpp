@@ -25,6 +25,12 @@ constexpr std::string NOR_TYPE  = "nor";
 constexpr std::string XNOR_TYPE  = "xnor";
 constexpr std::string NOT_TYPE  = "not";
 constexpr std::string FOUR_AND_TYPE  = "4081";
+constexpr std::string FOUR_OR_TYPE  = "4071";
+constexpr std::string SIX_INVERTER_TYPE  = "4069";
+constexpr std::string FOUR_XOR_TYPE  = "4030";
+constexpr std::string FOUR_NAND_TYPE  = "4011";
+constexpr std::string FOUR_NOR_TYPE  = "4001";
+
 
 enum Tristate: std::uint8_t {
     FALSE     = 0U,
