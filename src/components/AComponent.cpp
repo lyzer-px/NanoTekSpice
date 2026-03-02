@@ -23,6 +23,15 @@ Pin::Pin(const PinType &pinType): type{pinType}, linkedComponent{nullptr},
     pin{0}
 {}
 
+void Pin::setLink(const PinNumber &componentPin, IComponent *component)
+{
+    if (linkedComponent != nullptr)
+        return;
+
+    linkedComponent = component;
+    pin = componentPin;
+}
+
 AComponent::AComponent(std::string name): _name{std::move(name)},
     _numberOfPin{1}, _tick{0}
 {}
@@ -34,8 +43,7 @@ void AComponent::setLink(const std::size_t &pin, IComponent &other,
         throw std::runtime_error("Bad pin number");
 
     if (_pins[pin].type == PinType::INPUT) {
-        _pins[pin].linkedComponent = &other;
-        _pins[pin].pin             = otherPin;
+        _pins[pin].setLink(otherPin, &other);
     } else {
         if (getPinType(otherPin, other) == PinType::OUTPUT) {
             throw std::runtime_error("Can not connect two pin of same type");
