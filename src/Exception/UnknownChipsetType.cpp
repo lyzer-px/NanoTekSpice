@@ -5,19 +5,19 @@
 ** UnknowChipsetType
 */
 
-#include "../../include/Exception/UnknowChipsetType.hpp"
+#include "Exception/UnknownChipsetType.hpp"
 
 #include <iostream>
 #include <sstream>
 
 namespace nts {
 namespace error {
-UnknowChipsetType::UnknowChipsetType(const std::string &filename,
+UnknownChipsetType::UnknownChipsetType(const std::string &filename,
     const std::string &line, const std::size_t &lineNumber):
     ParsingException{filename, line, lineNumber}
 {
-    _message = "Unknown Chipset type in chipset definition";
-    _errorCode = "[Unknow-Chipset-Type]";
+    _message = "Unknownn Chipset type in chipset definition";
+    _errorCode = "[Unknown-Chipset-Type]";
 
     std::stringstream stream;
     stream << "  " << _lineNumber << " | " << _line;

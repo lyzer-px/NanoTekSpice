@@ -5,18 +5,18 @@
 ** UnknowChipsetType
 */
 
-#ifndef NANOTEKSPICE_UNKNOWCHIPSETTYPE_HPP
-#define NANOTEKSPICE_UNKNOWCHIPSETTYPE_HPP
+#ifndef NANOTEKSPICE_UNKNOWNCHIPSETTYPE_HPP
+#define NANOTEKSPICE_UNKNOWNCHIPSETTYPE_HPP
 #include "ParsingException.hpp"
 
 namespace nts {
 namespace error {
-class UnknowChipsetType: public ParsingException {
+class UnknownChipsetType: public ParsingException {
 public:
-    explicit UnknowChipsetType(const std::string &filename,
+    explicit UnknownChipsetType(const std::string &filename,
         const std::string &line, const std::size_t &lineNumber);
 };
 } // error
 } // nts
 
-#endif //NANOTEKSPICE_UNKNOWCHIPSETTYPE_HPP
+#endif //NANOTEKSPICE_UNKNOWNCHIPSETTYPE_HPP

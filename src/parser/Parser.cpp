@@ -21,6 +21,8 @@
 #include "Exception/BadFileExtensionException.hpp"
 #include "Exception/UnknownChipsetType.hpp"
 #include "Exception/LinkSyntaxError.hpp"
+#include "Exception/ChipsetAlreadyDefinedError.hpp"
+#include "Exception/FileNotFoundException.hpp"
 #include "Exception/ChipsetArgumentError.hpp"
 #include "StringUtils.hpp"
 
@@ -98,6 +100,9 @@ bool nts::Parser::pushToChipsets(std::vector<std::string> tokens)
 {
     if (this->_parsingComponentsSection && !this->_parsingLinksSection) {
         verifyChipsetSyntax(tokens);
+        if (this->componentExists(tokens.at(0)))
+            throw error::ChipsetAlreadyDefinedError(this->_filename, this->_currentLine,
+                                                    this->_currentLineIndex);
         this->_chipsets.emplace_back(tokens.at(0), tokens.at(1));
         return true;
     }
@@ -141,7 +146,7 @@ void nts::Parser::parse()
 void nts::Parser::start()
 {
     if (this->_stream.fail())
-        throw std::runtime_error("Cannot open file");
+        throw error::FileNotFoundException();
     if (this->_badExtention)
         throw error::BadFileExtensionException();
     this->parse();
@@ -179,7 +184,8 @@ void nts::Parser::verifyChipsetSyntax(const std::vector<std::string> &tokens)
         if (tokens.at(0) == keyword)
             return;
     }
-    throw error::UnknownChipsetType(this->_filename, this->_currentLine, this->_currentLineIndex);
+    throw error::UnknownChipsetType(this->_filename, this->_currentLine,
+                                    this->_currentLineIndex);
 }
 
 bool nts::Parser::componentExists(const std::string &str)
