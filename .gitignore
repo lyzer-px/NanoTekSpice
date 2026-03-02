@@ -41,6 +41,7 @@ unit_tests
 
 # debug information files
 *.dwo
+compile_commands.json
 
 # CMake and make files
 cmake-build-debug/
