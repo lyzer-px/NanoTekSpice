@@ -12,7 +12,7 @@ False::False(std::string name): ASpecialComponent{std::move(name)}
 {
     _type            = FALSE_TYPE;
     _outputStates[0] = Tristate::FALSE;
-    _pins[1]         = Pin{PinType::OUTPUT, nullptr, 0};
+    _pins[1]         = Pin{PinType::OUTPUT};
 }
 
 std::unique_ptr<IComponent> False::create(std::string name)

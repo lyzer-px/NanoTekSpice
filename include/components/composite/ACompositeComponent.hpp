@@ -25,12 +25,13 @@ public:
         const std::size_t &otherPin) override;
 
     virtual void registerInternComponentsPins();
+
     virtual void setPinsType();
 
 protected:
     std::vector<std::unique_ptr<IComponent>> _components;
     std::unordered_map<std::size_t, std::pair<IComponent *, std::size_t>>
-        _inputPins;
+    _inputPins;
 };
 
 } // namespace nts
