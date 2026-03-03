@@ -52,6 +52,7 @@ const std::vector<std::string> CHIPSET_TYPES = {
     "4801",
     "2716",
     "half_adder",
+    "ah_sr_latch",
     "full_adder",
     ""
 };
