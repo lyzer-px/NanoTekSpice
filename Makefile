@@ -29,6 +29,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) *.gc*
 
 re: fclean all
 
@@ -41,6 +42,9 @@ tests_run: fclean
 		SRC="$(filter-out src/main.cpp,$(SRC)) $(shell find tests/src -name '*.cpp')" \
 		all
 	./unit_tests
+
+coverage:
 	gcovr --gcov-executable "llvm-cov gcov" --exclude tests/
+	gcovr --gcov-executable "llvm-cov gcov" --exclude tests/ --txt-metric branch
 
 .PHONY: all clean fclean re debug tests_run
