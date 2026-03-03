@@ -1,0 +1,7 @@
+.chipsets:
+input a
+input b
+input c
+output o
+4011 Z
+o:1 Z:3
