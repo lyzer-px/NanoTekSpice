@@ -16,7 +16,7 @@ UnknownChipsetType::UnknownChipsetType(const std::string &filename,
     const std::string &line, const std::size_t &lineNumber):
     ParsingException{filename, line, lineNumber}
 {
-    _message = "Unknownn Chipset type in chipset definition";
+    _message = "Unknown Chipset type in chipset definition";
     _errorCode = "[Unknown-Chipset-Type]";
 
     std::stringstream stream;
