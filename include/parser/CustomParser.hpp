@@ -55,6 +55,8 @@ private:
     void checkLink(bool isFirst, const std::string &str);
 
     void parseLinks();
+
+    void registerLink(const std::vector<std::string> &words);
 };
 
 } // namespace nts

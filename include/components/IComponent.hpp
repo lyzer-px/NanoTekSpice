@@ -12,25 +12,27 @@
 #include <string>
 
 namespace nts {
-constexpr std::string INPUT_TYPE  = "input";
-constexpr std::string OUTPUT_TYPE = "output";
-constexpr std::string TRUE_TYPE   = "true";
-constexpr std::string FALSE_TYPE  = "false";
-constexpr std::string CLOCK_TYPE  = "clock";
-constexpr std::string AND_TYPE  = "and";
-constexpr std::string NAND_TYPE  = "nand";
-constexpr std::string OR_TYPE  = "or";
-constexpr std::string XOR_TYPE  = "xor";
-constexpr std::string NOR_TYPE  = "nor";
-constexpr std::string XNOR_TYPE  = "xnor";
-constexpr std::string NOT_TYPE  = "not";
-constexpr std::string FOUR_AND_TYPE  = "4081";
-constexpr std::string FOUR_OR_TYPE  = "4071";
-constexpr std::string SIX_INVERTER_TYPE  = "4069";
-constexpr std::string FOUR_XOR_TYPE  = "4030";
-constexpr std::string FOUR_NAND_TYPE  = "4011";
-constexpr std::string FOUR_NOR_TYPE  = "4001";
-
+constexpr std::string INPUT_TYPE          = "input";
+constexpr std::string OUTPUT_TYPE         = "output";
+constexpr std::string TRUE_TYPE           = "true";
+constexpr std::string FALSE_TYPE          = "false";
+constexpr std::string CLOCK_TYPE          = "clock";
+constexpr std::string AND_TYPE            = "and";
+constexpr std::string NAND_TYPE           = "nand";
+constexpr std::string OR_TYPE             = "or";
+constexpr std::string XOR_TYPE            = "xor";
+constexpr std::string NOR_TYPE            = "nor";
+constexpr std::string XNOR_TYPE           = "xnor";
+constexpr std::string NOT_TYPE            = "not";
+constexpr std::string FOUR_AND_TYPE       = "4081";
+constexpr std::string FOUR_OR_TYPE        = "4071";
+constexpr std::string SIX_INVERTER_TYPE   = "4069";
+constexpr std::string FOUR_XOR_TYPE       = "4030";
+constexpr std::string FOUR_NAND_TYPE      = "4011";
+constexpr std::string FOUR_NOR_TYPE       = "4001";
+constexpr std::string FULL_ADDER_TYPE     = "full_adder";
+constexpr std::string HALF_ADDER_TYPE     = "half_adder";
+constexpr std::string FOUR_BIT_ADDER_TYPE = "4008";
 
 enum Tristate: std::uint8_t {
     FALSE     = 0U,

@@ -51,6 +51,8 @@ const std::vector<std::string> CHIPSET_TYPES = {
     "4514",
     "4801",
     "2716",
+    "half_adder",
+    "full_adder",
     ""
 };
 
@@ -233,6 +235,16 @@ void CustomParser::parseLinks()
 
         checkLink(true, words[0]);
         checkLink(false, words[1]);
+
+        CustomParser::registerLink(words);
     }
+}
+
+void CustomParser::registerLink(const std::vector<std::string> &words)
+{
+    auto node1 = utils::StringUtils::split(words[0], ':');
+    auto node2 = utils::StringUtils::split(words[1], ':');
+
+    _links.emplace_back(node1[0], node1[1], node2[0], node2[1]);
 }
 } // namespace nts
