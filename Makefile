@@ -5,19 +5,19 @@
 ## Makefile
 ##
 
-CXX		= clang++
+CXX		=	clang++
 
 SRC     =	$(shell find src/ -wholename "*.cpp")
 
-OBJ     = $(SRC:.cpp=.o)
+OBJ     =	$(SRC:.cpp=.o)
 
-NAME    = nanotekspice
+NAME    =	nanotekspice
 
-VPATH = include/
+VPATH	=	include/
 
 CXXFLAGS += -Wall -Wextra -std=c++20
 
-CPPFLAGS = -iquote $(VPATH) \
+CPPFLAGS = -iquote $(VPATH)
 
 all: $(NAME)
 
@@ -25,22 +25,26 @@ $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
-	rm -rf $(OBJ)
-	rm -rf *~
-	rm -rf #*#
-	rm -rf a.out
-	rm -rf vgcore*
-	rm -rf *.gcda
-	rm -rf *.gcno
-	rm -rf *.gcov
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) *.gc*
 
 re: fclean all
 
-debug: CXXFLAGS += -g3
-debug: CXXFLAGS += -DDEBUG
+debug: CXXFLAGS += -g3 -DDEBUG
 debug: re
+
+tests_run: fclean
+	$(MAKE) NAME=unit_tests \
+		LDFLAGS="--coverage -lcriterion" \
+		SRC="$(filter-out src/main.cpp,$(SRC)) $(shell find tests/src -name '*.cpp')" \
+		all
+	./unit_tests
+
+coverage:
+	gcovr --gcov-executable "llvm-cov gcov" --exclude tests/
+	gcovr --gcov-executable "llvm-cov gcov" --exclude tests/ --txt-metric branch
 
 .PHONY: all clean fclean re debug tests_run

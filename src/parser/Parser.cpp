@@ -152,7 +152,9 @@ void nts::Parser::start()
         throw error::BadFileExtensionException();
     this->parse();
     if (this->_chipsets.empty())
-        throw ParserSyntaxException("Parser: Missing chipsets section");
+        throw error::ChipsetArgumentError(false, this->_filename,
+                                          this->_currentLine,
+                                          this->_currentLineIndex);
     if (this->_links.empty())
         throw ParserSyntaxException("Parser: Missing links section");
 }

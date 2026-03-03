@@ -20,7 +20,7 @@
 #include "../../include/Exception/LinkUnknownChipset.hpp"
 #include "../../include/Exception/NoChipsetError.hpp"
 #include "../../include/Exception/PinNumberIsInteger.hpp"
-#include "../../include/Exception/UnknowChipsetType.hpp"
+#include "../../include/Exception/UnknownChipsetType.hpp"
 #include "../../include/Utils/StringUtils.hpp"
 
 namespace nts {
@@ -149,7 +149,7 @@ std::string CustomParser::sanitize(std::string &str)
 void CustomParser::checkChipsetType(const std::vector<std::string> &words)
 {
     if (std::ranges::find(CHIPSET_TYPES, words[0]) == CHIPSET_TYPES.end())
-        throw error::UnknowChipsetType(_filename, _line, _lineNumber);
+        throw error::UnknownChipsetType(_filename, _line, _lineNumber);
 }
 
 bool CustomParser::checkChipsetName(const std::vector<std::string> &words)
