@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** NanoTekSpice
 ** File description:
-** UnknowChipsetType
+** UnknownChipsetType
 */
 
 #include "Exception/UnknownChipsetType.hpp"
