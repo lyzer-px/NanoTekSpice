@@ -1,9 +1,0 @@
-.chipsets:
-nor a
-input i
-input j
-output o
-.links:
-a:1 i:1
-a:2 j:1
-a:3 o:1
