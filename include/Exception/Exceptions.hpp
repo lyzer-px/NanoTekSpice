@@ -22,6 +22,5 @@
 #include "ParsingException.hpp"
 #include "PinNumberIsInteger.hpp"
 #include "UnknownChipsetType.hpp"
-#include "UnknownChipsetType.hpp"
 
 #endif // !EXCEPTIONS_HPP
