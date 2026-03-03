@@ -33,6 +33,7 @@ constexpr std::string FOUR_NOR_TYPE        = "4001";
 constexpr std::string FULL_ADDER_TYPE      = "full_adder";
 constexpr std::string HALF_ADDER_TYPE      = "half_adder";
 constexpr std::string ACTIVE_HIGH_SR_LATCH = "ah_sr_latch";
+constexpr std::string D_LATCH              = "d_latch";
 constexpr std::string FOUR_BIT_ADDER_TYPE  = "4008";
 
 enum Tristate: std::uint8_t {
