@@ -14,8 +14,7 @@ ASpecialComponent::ASpecialComponent(std::string name):
     AComponent(std::move(name))
 {
     _numberOfPin = 1;
-    _outputStates.reserve(1);
-    _outputStates[0] = Tristate::UNDEFINED;
+    _outputStates.push_back(Tristate::UNDEFINED);
 }
 
 Tristate ASpecialComponent::compute(const std::size_t &)
