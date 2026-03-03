@@ -83,13 +83,13 @@ nts::Parser::Parser(const std::string &filename) noexcept:
 
 bool nts::Parser::toggleParsingSections(std::vector<std::string> tokens, size_t &index)
 {
-    if (tokens[0] == KEYWORDS[0] && index == 0) {
+    if (tokens.at(0) == KEYWORDS.at(0) && index == 0) {
         this->_parsingComponentsSection = true;
         this->_parsingLinksSection      = false;
         index++;
         return true;
     }
-    if (tokens[0] == KEYWORDS[1] && index != 0) {
+    if (tokens.at(0) == KEYWORDS.at(1) && index != 0) {
         this->_parsingLinksSection      = true;
         this->_parsingComponentsSection = false;
         return true;
@@ -131,7 +131,7 @@ void nts::Parser::parse()
     while (std::getline(this->_stream, line)) {
         this->_currentLineIndex++;
         this->_currentLine = line;
-        if (line[0] == '#') {
+        if (line[0] == '#' || line.empty()) {
             continue;
         }
         strutils::sanitize(line);

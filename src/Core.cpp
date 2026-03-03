@@ -22,12 +22,12 @@ nts::Core::Core(const std::string &filename) noexcept: _parser(filename),
 void nts::Core::run()
 {
     try {
-        // this->_parser.start();
-        this->_customParser.parse();
+        this->_parser.start();
+        //this->_customParser.parse();
 
         auto *circuit = dynamic_cast<Circuit *>(this->_circuit.get());
-        circuit->setChipset(this->_customParser.getChipsets());
-        circuit->linkChipsets(this->_customParser.getLinks());
+        circuit->setChipset(this->_parser.getChipsets());
+        circuit->linkChipsets(this->_parser.getLinks());
 
         _shell->setCircuit(circuit);
         _shell->run();
