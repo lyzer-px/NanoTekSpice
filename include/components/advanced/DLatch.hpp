@@ -7,7 +7,7 @@
 
 #ifndef NANOTEKSPICE_DLATCH_HPP
 #define NANOTEKSPICE_DLATCH_HPP
-#include "ACompositeComponent.hpp"
+#include "../composite/ACompositeComponent.hpp"
 
 namespace nts {
 class DLatch: public ACompositeComponent {

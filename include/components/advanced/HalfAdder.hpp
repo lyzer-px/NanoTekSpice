@@ -7,7 +7,7 @@
 
 #ifndef NANOTEKSPICE_HALFADDER_HPP
 #define NANOTEKSPICE_HALFADDER_HPP
-#include "ACompositeComponent.hpp"
+#include "../composite/ACompositeComponent.hpp"
 
 namespace nts {
 class HalfAdder: public ACompositeComponent {

@@ -7,7 +7,7 @@
 
 #ifndef NANOTEKSPICE_FOURBITADDER_HPP
 #define NANOTEKSPICE_FOURBITADDER_HPP
-#include "ACompositeComponent.hpp"
+#include "../composite/ACompositeComponent.hpp"
 
 namespace nts {
 class FourBitAdder: public ACompositeComponent {

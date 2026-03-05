@@ -5,7 +5,7 @@
 ** FullBitAdder
 */
 
-#include "../../../include/components/composite/FullBitAdder.hpp"
+#include "../../../include/components/advanced/FullBitAdder.hpp"
 
 #include <algorithm>
 #include <cstddef>
@@ -13,7 +13,7 @@
 #include <string>
 
 #include "../../../include/components/IComponent.hpp"
-#include "../../../include/components/composite/HalfAdder.hpp"
+#include "../../../include/components/advanced/HalfAdder.hpp"
 #include "../../../include/components/elementary/And.hpp"
 #include "../../../include/components/elementary/Or.hpp"
 #include "../../../include/components/elementary/Xor.hpp"

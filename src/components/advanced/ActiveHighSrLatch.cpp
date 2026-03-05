@@ -5,7 +5,7 @@
 ** ActiveHighSrLatch
 */
 
-#include "../../../include/components/composite/ActiveHighSrLatch.hpp"
+#include "../../../include/components/advanced/ActiveHighSrLatch.hpp"
 
 #include "../../../include/components/elementary/Nor.hpp"
 

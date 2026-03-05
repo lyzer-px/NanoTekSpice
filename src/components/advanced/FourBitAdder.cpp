@@ -5,9 +5,8 @@
 ** FourBitAdder
 */
 
-#include "../../../include/components/composite/FourBitAdder.hpp"
-
-#include "../../../include/components/composite/FullBitAdder.hpp"
+#include "../../../include/components/advanced/FourBitAdder.hpp"
+#include "../../../include/components/advanced/FullBitAdder.hpp"
 
 namespace nts {
 FourBitAdder::FourBitAdder(std::string name): ACompositeComponent{
