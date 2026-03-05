@@ -25,6 +25,8 @@
 #include "components/elementary/Xnor.hpp"
 #include "components/elementary/Xor.hpp"
 #include "components/IComponent.hpp"
+#include "components/composite/ActiveHighSrLatch.hpp"
+#include "components/composite/DLatch.hpp"
 #include "components/composite/FourBitAdder.hpp"
 #include "components/composite/FullBitAdder.hpp"
 #include "components/composite/HalfAdder.hpp"
@@ -50,6 +52,7 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<Xor>(XOR_TYPE);
     _factory.registerCreator<Xnor>(XNOR_TYPE);
     _factory.registerCreator<Not>(NOT_TYPE);
+    _factory.registerCreator<Nor>(NOR_TYPE);
 
     _factory.registerCreator<FourAnd>(FOUR_AND_TYPE);
     _factory.registerCreator<FourNand>(FOUR_NAND_TYPE);
@@ -59,6 +62,8 @@ Circuit::Circuit(std::string name): AComponent{std::move(name)}
     _factory.registerCreator<SixInverter>(SIX_INVERTER_TYPE);
     _factory.registerCreator<HalfAdder>(HALF_ADDER_TYPE);
     _factory.registerCreator<FullBitAdder>(FULL_ADDER_TYPE);
+    _factory.registerCreator<ActiveHighSRLatch>(ACTIVE_HIGH_SR_LATCH);
+    _factory.registerCreator<DLatch>(D_LATCH);
     _factory.registerCreator<FourBitAdder>(FOUR_BIT_ADDER_TYPE);
 }
 

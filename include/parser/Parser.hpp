@@ -78,7 +78,6 @@ private:
 
     std::ifstream _stream;
     std::string _filename;
-    bool _badExtention;
     bool _parsingComponentsSection;
     bool _parsingLinksSection;
     std::size_t _currentLineIndex = 0;

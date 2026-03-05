@@ -22,5 +22,6 @@
 #include "ParsingException.hpp"
 #include "PinNumberIsInteger.hpp"
 #include "UnknownChipsetType.hpp"
+#include "LinkCommandNotFound.hpp"
 
 #endif // !EXCEPTIONS_HPP

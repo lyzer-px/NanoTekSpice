@@ -22,6 +22,9 @@ inline std::vector<std::string> splitStr(std::string &str, char delimiter)
     std::string token;
 
     while (getline(stream, token, delimiter)) {
+        if (token.empty() || token.find('#') != std::string::npos ||
+            token.find('\t') != std::string::npos)
+            break;
         tokens.push_back(token);
     }
     return tokens;
