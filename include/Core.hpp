@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <string>
+#include "parser/CustomParser.hpp"
 #include "parser/Parser.hpp"
 #include "shell/NtsShell.hpp"
 #include "components/Circuit.hpp"
@@ -24,6 +25,7 @@ public:
     void run();
 private:
     Parser _parser;
+    CustomParser _customParser;
     std::unique_ptr<NtsShell> _shell;
     std::unique_ptr<IComponent> _circuit;
 };

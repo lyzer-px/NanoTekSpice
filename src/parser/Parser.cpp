@@ -28,6 +28,7 @@
 namespace nts {
 
 const std::vector<nts::Token> KEYWORDS = {
+    "full_adder",
     ".chipsets:",
     ".links:",
     "input",
