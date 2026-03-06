@@ -57,6 +57,7 @@ const std::vector<nts::Token> KEYWORDS = {
     "4514",
     "4801",
     "2716",
+    "d_latch",
     ""
 };
 
