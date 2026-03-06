@@ -34,6 +34,7 @@ const std::vector<nts::Token> KEYWORDS = {
     "output",
     "true",
     "false",
+    "clock",
     "and",
     "nand",
     "or",

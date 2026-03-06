@@ -55,7 +55,7 @@ void ACompositeComponent::registerInternComponentsPins()
     _internalPins[7]  = {};
     _internalPins[8]  = {std::pair{_components[2].get(), 1}};
     _internalPins[9]  = {std::pair{_components[2].get(), 2}};
-    _internalPins[10] = {std::pair{_components[3].get(), 3}};
+    _internalPins[10] = {std::pair{_components[2].get(), 3}};
     _internalPins[11] = {std::pair{_components[3].get(), 3}};
     _internalPins[12] = {std::pair{_components[3].get(), 1}};
     _internalPins[13] = {std::pair{_components[3].get(), 2}};
