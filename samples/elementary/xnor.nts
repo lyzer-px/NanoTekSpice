@@ -1,0 +1,9 @@
+.chipsets:
+xnor xnor
+input in_1
+input in_2
+output out
+.links:
+in_1:1 xnor:1
+in_2:1 xnor:2
+out:1 xnor:3

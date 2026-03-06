@@ -1,0 +1,9 @@
+.chipsets:
+or or
+input in_1
+input in_2
+output out
+.links:
+in_1:1 or:1
+in_2:1 or:2
+out:1 or:3

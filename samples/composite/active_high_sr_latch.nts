@@ -1,0 +1,11 @@
+.chipsets:
+ah_sr_latch latch
+input reset
+input set
+output q
+output not_q
+.links:
+reset:1 latch:1
+set:1 latch:2
+q:1 latch:4
+not_q:1 latch:3

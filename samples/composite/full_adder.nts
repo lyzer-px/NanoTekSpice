@@ -1,0 +1,13 @@
+.chipsets:
+full_adder adder
+input in_a
+input in_b
+input cin
+output sum
+output cout
+.links:
+in_a:1 adder:1
+in_b:1 adder:2
+cin:1 adder:3
+sum:1 adder:4
+cout:1 adder:5
