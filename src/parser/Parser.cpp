@@ -28,6 +28,7 @@
 namespace nts {
 
 const std::vector<nts::Token> KEYWORDS = {
+    "d_latch",
     ".chipsets:",
     ".links:",
     "input",
