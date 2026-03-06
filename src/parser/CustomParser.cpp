@@ -31,6 +31,7 @@ const std::vector<std::string> CHIPSET_TYPES = {
     "output",
     "true",
     "false",
+    "clock",
     "and",
     "or",
     "xor",

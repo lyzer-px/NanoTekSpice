@@ -71,12 +71,12 @@ void Circuit::simulate(const std::size_t &tick)
     ++_tick;
 
     for (auto &[component, state]: _inputs | std::views::values) {
-        component->simulate(tick);
+        component->simulate(_tick);
         state = component->compute(1);
     }
 
     for (auto &[component, state]: _output | std::views::values) {
-        component->simulate(tick);
+        component->simulate(_tick);
         state = component->compute(1);
     }
 }
@@ -85,13 +85,13 @@ Tristate Circuit::compute(const std::size_t &)
 {
     std::cout << "tick: " << _tick << std::endl;
 
-    std::cout << "input(s): " << std::endl;
+    std::cout << "input(s):" << std::endl;
     for (const auto &[chipsetName, node]: _inputs) {
         const auto &[component, state] = node;
         std::cout << "  " << chipsetName << ": " << state << std::endl;
     }
 
-    std::cout << "output(s): " << std::endl;
+    std::cout << "output(s):" << std::endl;
     for (const auto &[chipsetName, node]: _output) {
         const auto &[component, state] = node;
         std::cout << "  " << chipsetName << ": " << state << std::endl;
