@@ -185,8 +185,7 @@ void Circuit::setInput(const ChipsetName &chipsetName, const std::string &value)
 void Circuit::saveIfInputOrOutput(const ChipsetType &chipsetType,
     const ChipsetName &chipsetName, IComponent *chipset)
 {
-    if (chipsetType == INPUT_TYPE || chipsetType == TRUE_TYPE ||
-        chipsetType == FALSE_TYPE || chipsetType == CLOCK_TYPE) {
+    if (chipsetType == INPUT_TYPE || chipsetType == CLOCK_TYPE) {
         _inputs[chipsetName] = std::pair{chipset, chipset->compute(1)};
     }
     if (chipsetType == OUTPUT_TYPE) {
