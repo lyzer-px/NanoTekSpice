@@ -14,8 +14,8 @@ namespace nts {
 Xnor::Xnor(std::string name) : AElementaryComponent(std::move(name)) {
         this->_type = XNOR_TYPE;
         this->_truthTable = {
-            {Tristate::TRUE, Tristate::FALSE, Tristate::UNDEFINED},
-            {Tristate::FALSE, Tristate::TRUE, Tristate::UNDEFINED},
+            {Tristate::TRUE, Tristate::FALSE, Tristate::FALSE},
+            {Tristate::FALSE, Tristate::TRUE, Tristate::FALSE},
             {Tristate::UNDEFINED, Tristate::UNDEFINED, Tristate::UNDEFINED},
         };
     }
