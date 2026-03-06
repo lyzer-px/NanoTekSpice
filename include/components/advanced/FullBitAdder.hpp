@@ -7,7 +7,7 @@
 
 #ifndef NANOTEKSPICE_FULLBITADDER_HPP
 #define NANOTEKSPICE_FULLBITADDER_HPP
-#include "ACompositeComponent.hpp"
+#include "../composite/ACompositeComponent.hpp"
 
 namespace nts {
 class FullBitAdder: public ACompositeComponent {

@@ -2,17 +2,18 @@
 ** EPITECH PROJECT, 2026
 ** NanoTekSpice
 ** File description:
-** HalfAdder
+** DFlipFlop
 */
 
-#ifndef NANOTEKSPICE_HALFADDER_HPP
-#define NANOTEKSPICE_HALFADDER_HPP
-#include "../composite/ACompositeComponent.hpp"
+#ifndef NANOTEKSPICE_DFLIPFLOP_HPP
+#define NANOTEKSPICE_DFLIPFLOP_HPP
+
+#include "components/composite/ACompositeComponent.hpp"
 
 namespace nts {
-class HalfAdder: public ACompositeComponent {
+class DFlipFlop: public ACompositeComponent {
 public:
-    explicit HalfAdder(std::string name);
+    explicit DFlipFlop(std::string name);
 
     static std::unique_ptr<IComponent> create(std::string name);
 
@@ -23,4 +24,4 @@ private:
 };
 } // nts
 
-#endif //NANOTEKSPICE_HALFADDER_HPP
+#endif //NANOTEKSPICE_DFLIPFLOP_HPP

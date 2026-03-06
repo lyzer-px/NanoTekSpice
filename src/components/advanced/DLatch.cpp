@@ -5,16 +5,16 @@
 ** DLatch
 */
 
-#include "../../../include/components/composite/DLatch.hpp"
+#include "../../../include/components/advanced/DLatch.hpp"
 
-#include "../../../include/components/composite/ActiveHighSrLatch.hpp"
+#include "../../../include/components/advanced/ActiveHighSrLatch.hpp"
 #include "../../../include/components/elementary/And.hpp"
 #include "../../../include/components/elementary/Not.hpp"
 
 namespace nts {
 DLatch::DLatch(std::string name): ACompositeComponent{std::move(name)}
 {
-    _type        = D_LATCH;
+    _type        = D_LATCH_TYPE;
     _numberOfPin = 4;
 
     _components.push_back(std::make_unique<Not>("not"));

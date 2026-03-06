@@ -7,7 +7,7 @@
 
 #ifndef NANOTEKSPICE_ACTIVEHIGHSRLATCH_HPP
 #define NANOTEKSPICE_ACTIVEHIGHSRLATCH_HPP
-#include "ACompositeComponent.hpp"
+#include "../composite/ACompositeComponent.hpp"
 
 namespace nts {
 class ActiveHighSRLatch: public ACompositeComponent {

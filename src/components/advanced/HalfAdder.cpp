@@ -5,8 +5,8 @@
 ** HalfAdder
 */
 
-#include "../../../include/components/composite/HalfAdder.hpp"
-
+#include "../../../include/components/advanced/HalfAdder.hpp"
+#include "components/composite/ACompositeComponent.hpp"
 #include "../../../include/components/elementary/And.hpp"
 #include "../../../include/components/elementary/Xor.hpp"
 
