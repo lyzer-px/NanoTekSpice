@@ -16,9 +16,13 @@ Clock::Clock(std::string name): ASpecialComponent{std::move(name)}
 
 void Clock::simulate(const std::size_t &tick)
 {
-    if (tick > _tick && _outputStates[0] != Tristate::UNDEFINED) {
-        _outputStates[0] = static_cast<Tristate>(!static_cast<bool>(
-            _outputStates[0]));
+    if (_setState != Tristate::ERROR) {
+        _outputStates[0] = _setState;
+        _setState        = Tristate::ERROR;
+    }
+
+    if (tick > _tick && tick > 1 && _outputStates[0] != Tristate::UNDEFINED) {
+        _outputStates[0] = _outputStates[0] == Tristate::TRUE ? Tristate::FALSE : Tristate::TRUE;
     }
 
     _tick = tick;

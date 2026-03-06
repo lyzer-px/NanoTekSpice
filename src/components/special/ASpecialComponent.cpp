@@ -37,6 +37,8 @@ void ASpecialComponent::simulate(const std::size_t &tick)
     if (_setState != Tristate::ERROR) {
         _outputStates[0] = _setState;
         _setState        = Tristate::ERROR;
+        // if (_pins[1].linkedComponent != nullptr)
+        //     _pins[1].linkedComponent->simulate(tick);
     }
 
     AComponent::simulate(tick);
