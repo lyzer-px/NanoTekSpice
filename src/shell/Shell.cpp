@@ -40,7 +40,7 @@ void Shell::run()
     while (true) {
         std::cout << _prompt;
         if (!std::getline(std::cin, line)) {
-            std::cout << std::endl;
+            std::cout.flush();
             return;
         }
         if (isEmptyLine(line)) {
